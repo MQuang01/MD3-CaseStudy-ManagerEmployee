@@ -10,7 +10,7 @@ public class AccountDAO extends DBConnect implements IAccountDAO {
 
     @Override
     public boolean checkLogin(Account account) {
-        
+        //ok
         return false;
     }
 }
