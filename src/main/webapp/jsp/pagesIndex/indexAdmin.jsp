@@ -462,5 +462,5 @@
             </table>
         </div>
     </div>
-
-    <c:import url="../../footer.jsp"/>
+</main>
+<c:import url="../../footer.jsp"/>
