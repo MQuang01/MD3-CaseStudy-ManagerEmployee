@@ -7,6 +7,12 @@
   To change this template use File | Settings | File Templates.
 --%>
 <c:import url="../../header.jsp" />
-<h3>Employee</h3>
 
+<h3>${member.fullName}</h3>
+<input type="hidden" id="fullName" value="${member.fullName}">
+
+<script>
+    const fullName = document.getElementById("fullName").value
+    console.log(fullName)
+</script>
 <c:import url="../../footer.jsp" />

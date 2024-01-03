@@ -11,8 +11,8 @@ import java.time.LocalDate;
 
 public class MemberDAO extends DBConnect implements IMemberDAO {
     private static final String SELECT_MEMBER = "select * from members " +
-                                                    "inner join accounts on accounts.id = members.accountId" +
-                                                        "(where id = ? );";
+                                                    "inner join accounts on accounts.id = members.accounts_id " +
+                                                        "where ( accounts.id = ? );";
 
     public MemberDAO() {
     }
@@ -31,6 +31,7 @@ public class MemberDAO extends DBConnect implements IMemberDAO {
                 String email = rs.getString("email");
                 int teamId = rs.getInt("teamId");
                 int accountId = rs.getInt("accounts_id");
+
                 return new Member(idMember, nameMember, phoneMember, date, email, teamId, accountId);
             }
         } catch (SQLException e) {

@@ -35,17 +35,21 @@ public class AuthServlet extends HttpServlet {
 
     private void checkLogin(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
         Account account = accountDAO.checkLoginCorrect(new Account(req.getParameter("username"), req.getParameter("psw")));
+
         HttpSession session= req.getSession();
 
         if(account != null){
             if(account.getRole().equals(ERole.ADMIN)){
 
-                session.setAttribute(account.getUsername(), memberDAO.selectMemberById(account.getId()).getFullName());
+                session.setAttribute("account", memberDAO.selectMemberById(account.getId()));
 
-                resp.sendRedirect("jsp/pagesIndex/indexAdmin.jsp");
+                resp.sendRedirect("/admin-page");
             }
             if (account.getRole().equals(ERole.EMPLOYEE)){
-                resp.sendRedirect("jsp/pagesIndex/indexEmployee.jsp");
+
+                session.setAttribute("account", memberDAO.selectMemberById(account.getId()));
+
+                resp.sendRedirect("/employee-page");
             }
         }else {
             req.setAttribute("message", "Login Failed!");

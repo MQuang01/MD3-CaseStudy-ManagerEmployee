@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.time.LocalTime;
 import java.util.List;
 
-@WebServlet(name="manager-empl", value = "/timekeeping")
+@WebServlet(name="timeKeepingServlets", value = "/timekeeping")
 public class TimeKeepingServlet extends HttpServlet {
 
     private ITimeKeepingDAO timeKeepingDAO;
