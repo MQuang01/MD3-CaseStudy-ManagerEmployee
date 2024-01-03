@@ -9,6 +9,7 @@ Webcam.set({
 Webcam.attach("#camera");
 
 async function loadTrainingData() {
+
   const labels = ["Minh Quang", "Quoc Anh"];
 
   const faceDescriptors = [];

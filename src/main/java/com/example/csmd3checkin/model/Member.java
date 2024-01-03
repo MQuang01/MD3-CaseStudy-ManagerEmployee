@@ -79,4 +79,17 @@ public class Member {
     public void setAccountId(int accountId) {
         this.accountId = accountId;
     }
+
+    @Override
+    public String toString() {
+        return "Member{" +
+                "id=" + id +
+                ", fullName='" + fullName + '\'' +
+                ", phoneNum='" + phoneNum + '\'' +
+                ", doB=" + doB +
+                ", email='" + email + '\'' +
+                ", teamId=" + teamId +
+                ", accountId=" + accountId +
+                '}';
+    }
 }
