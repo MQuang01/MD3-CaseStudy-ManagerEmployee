@@ -19,9 +19,14 @@
             rel="stylesheet"
             href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
     />
+    <link
+            rel="stylesheet"
+            type="text/css"
+            href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css"
+    />
     <style>
         .bg-img {
-            background-image: url("../image/backgr.jpg");
+            background-image: url("../../image/backgr.jpg");
             background-size: cover;
         }
 
@@ -75,7 +80,8 @@
                 </div>
 
                 <div class="col-lg-6 mb-5 mb-lg-0">
-                    <img src="https://mdbootstrap.com/img/new/ecommerce/vertical/004.jpg" class="w-100 rounded-4 shadow-4"
+                    <img src="https://mdbootstrap.com/img/new/ecommerce/vertical/004.jpg"
+                         class="w-100 rounded-4 shadow-4"
                          alt=""/>
                 </div>
             </div>
@@ -85,6 +91,10 @@
     <!-- Section: Design Block -->
 </form>
 
-
 </body>
+    <script>
+        Toastify({
+            text: ${message},
+        }).showToast();
+    </script>
 </html>
