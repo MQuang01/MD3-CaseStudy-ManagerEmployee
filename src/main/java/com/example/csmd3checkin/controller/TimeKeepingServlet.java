@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.time.LocalTime;
+import java.util.Arrays;
 import java.util.List;
 
 @WebServlet(name="manager-empl", value = "/timekeeping")
@@ -43,9 +44,10 @@ public class TimeKeepingServlet extends HttpServlet {
 
         List<TimeKeeping> listTimeKeeping = timeKeepingDAO.selectAllTimeKeeping();
         int[] checkLateTimeAb= checkLateOnTimeAbsent(listTimeKeeping);
+        System.out.println(Arrays.toString(checkLateTimeAb));
+        request.setAttribute("dataCheckIn", checkLateTimeAb);
 
-        request.setAttribute("listTimeKeepingStatus", checkLateTimeAb);
-        request.getRequestDispatcher("index.jsp").forward(request, response);
+        request.getRequestDispatcher("jsp/pagesIndex/indexAdmin.jsp").forward(request, response);
     }
 
 
