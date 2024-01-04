@@ -84,7 +84,7 @@
     >
         <div class="py-4 text-gray-500 dark:text-gray-400">
             <button class="btn btn-intermediate">
-                <a href="/manager-page?act=checkin">Checkin Here</a>
+                <a href="/timekeeping">${w-Box-check}}</a>
             </button>
 
             <ul class="mt-6">

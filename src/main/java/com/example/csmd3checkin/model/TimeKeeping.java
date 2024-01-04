@@ -10,6 +10,7 @@ public class TimeKeeping {
     private LocalTime timeCheckout;
     private boolean status;
     private int memberId;
+    private Member member;
 
     public TimeKeeping() {
     }
@@ -21,6 +22,12 @@ public class TimeKeeping {
         this.timeCheckout = timeCheckout;
         this.status = status;
         this.memberId = memberId;
+    }
+    public TimeKeeping(int id, LocalDateTime day, boolean status, Member member) {
+        this.id = id;
+        this.day = day;
+        this.status = status;
+        this.member = member;
     }
 
     public int getId() {
@@ -69,5 +76,25 @@ public class TimeKeeping {
 
     public void setMemberId(int memberId) {
         this.memberId = memberId;
+    }
+
+    public Member getMember() {
+        return member;
+    }
+
+    public void setMember(Member member) {
+        this.member = member;
+    }
+
+    @Override
+    public String toString() {
+        return "TimeKeeping{" +
+                "id=" + id +
+                ", day=" + day +
+                ", timeCheckin=" + timeCheckin +
+                ", timeCheckout=" + timeCheckout +
+                ", status=" + status +
+                ", memberId=" + memberId +
+                '}';
     }
 }

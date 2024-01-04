@@ -18,6 +18,9 @@
           crossorigin="anonymous"></script>
   <link rel="stylesheet" href="../../style.css" />
   <style>
+    .container {
+      display: none;
+    }
     .btn-back{
       text-align: start;
       padding: 20px;
@@ -52,6 +55,36 @@
       transform: scale(1.05);
       animation-play-state: paused;
     }
+
+
+    .loading-container {
+      display: block;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(255, 255, 255, 0.8);
+      z-index: 9999;
+    }
+
+    .spinner {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 40px;
+      height: 40px;
+      margin: auto;
+      border-radius: 50%;
+      border: 5px solid rgba(0, 0, 0, 0.2);
+      border-top: 5px solid #3498db;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
   </style>
 </head>
 
@@ -65,7 +98,12 @@
 <div class="title-header">
   <h3>Check In</h3>
 </div>
-<div class="container">
+
+<div class="loading-container" id="loadingContainer">
+  <div class="spinner"></div>
+</div>
+
+<div class="container" id="container">
   <div id="camera"></div>
   <button class="button-29" role="button" onclick="snapShot()">Click here</button>
   <div id="formCaptured"></div>

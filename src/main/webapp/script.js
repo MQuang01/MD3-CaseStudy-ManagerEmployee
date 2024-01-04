@@ -1,12 +1,6 @@
 const formCaptured = document.querySelector("#formCaptured");
 
-Webcam.set({
-    width: 480,
-    height: 360,
-    image_format: "jpeg",
-    jpeg_quality: 90,
-});
-Webcam.attach("#camera");
+
 
 async function loadTrainingData() {
 
@@ -47,9 +41,20 @@ async function innit() {
     Toastify({
         text: "Tải xong model nhận diện !",
     }).showToast();
+    document.getElementById('loadingContainer').style.display = 'none';
+    document.getElementById('container').style.display = 'flex';
 }
 
 innit();
+
+
+Webcam.set({
+    width: 480,
+    height: 360,
+    image_format: "jpeg",
+    jpeg_quality: 90,
+});
+Webcam.attach("#camera");
 
 async function snapShot() {
     Webcam.snap(async function (data_uri) {
@@ -79,6 +84,7 @@ async function snapShot() {
             .withFaceDescriptors();
         const resizedDetections = faceapi.resizeResults(detections, size);
 
+
         for (const detection of resizedDetections) {
             const bestMatch = faceMatcher.findBestMatch(detection.descriptor);
 
@@ -99,6 +105,10 @@ async function snapShot() {
             });
 
             drawBox.draw(canvas);
+            setTimeout(function (){
+                window.location.href = "/timekeeping?act=getRequestJs"
+            }, 2000)
+
         }
     });
 }

@@ -2,7 +2,10 @@ package com.example.csmd3checkin.controller;
 
 import com.example.csmd3checkin.dao.Impl.AccountDAO;
 import com.example.csmd3checkin.dao.Impl.MemberDAO;
+import com.example.csmd3checkin.dao.Impl.TimeKeepingDAO;
 import com.example.csmd3checkin.model.Account;
+import com.example.csmd3checkin.model.Member;
+import com.example.csmd3checkin.model.TimeKeeping;
 import com.example.csmd3checkin.model.enumration.ERole;
 import com.mysql.cj.Session;
 
@@ -13,14 +16,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.time.LocalDateTime;
 
 @WebServlet(name = "auths", value = "/auths")
 public class AuthServlet extends HttpServlet {
     private AccountDAO accountDAO;
     private MemberDAO memberDAO;
+    private TimeKeepingDAO timeKeepingDAO;
     public void init(){
         accountDAO = new AccountDAO();
         memberDAO = new MemberDAO();
+        timeKeepingDAO = new TimeKeepingDAO();
     }
 
     @Override
@@ -48,21 +54,33 @@ public class AuthServlet extends HttpServlet {
         HttpSession session= req.getSession();
 
         if(account != null){
+            Member member = memberDAO.selectMemberById(account.getId(), account);
             if(account.getRole().equals(ERole.ADMIN)){
 
-                session.setAttribute("account", memberDAO.selectMemberById(account.getId(), account));
-
-                resp.sendRedirect("/admin-page");
+//                TimeKeeping timeKeeping = timeKeepingDAO.selectTimeKeeping(member, LocalDateTime.now());
+//
+//                String wordBoxCheck = timeKeeping.isStatus() ? "Check out" : "Check in";
+//
+//                session.setAttribute("account", member);
+//                req.setAttribute("w-Box-check", wordBoxCheck);
+//
+//                req.getRequestDispatcher("/admin-page").forward(req, resp);
+            } else {
+//                session.setAttribute("account", memberDAO.selectMemberById(account.getId(), account));
+//                TimeKeeping timeKeeping = timeKeepingDAO.selectTimeKeeping(member, LocalDateTime.now());
+//
+//                String wordBoxCheck = timeKeeping.isStatus() ? "Check out" : "Check in";
+//                session.setAttribute("account", member);
+//
+//                req.setAttribute("w-Box-check", wordBoxCheck);
+//
+//                req.getRequestDispatcher("/employee-page").forward(req, resp);
             }
-            if (account.getRole().equals(ERole.EMPLOYEE)){
-
-                session.setAttribute("account", memberDAO.selectMemberById(account.getId(), account));
-
-                resp.sendRedirect("/employee-page");
-            }
+            return;
         }else {
             req.setAttribute("message", "Login Failed!");
             req.getRequestDispatcher("jsp/login/login.jsp").forward(req, resp);
+            return;
         }
     }
 }
