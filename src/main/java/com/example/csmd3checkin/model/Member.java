@@ -11,6 +11,7 @@ public class Member {
     private int teamId;
     private int accountId;
     private Account account;
+
     public Member() {
     }
 
