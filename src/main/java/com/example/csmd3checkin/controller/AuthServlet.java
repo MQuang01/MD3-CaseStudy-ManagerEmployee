@@ -30,7 +30,16 @@ public class AuthServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        showLoginForm(req, resp);
+    }
 
+    private void showLoginForm(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        HttpSession session = req.getSession();
+        if (session != null) {
+            session.removeAttribute("account");
+        }
+
+        req.getRequestDispatcher("jsp/login/login.jsp").forward(req, resp);
     }
 
     @Override

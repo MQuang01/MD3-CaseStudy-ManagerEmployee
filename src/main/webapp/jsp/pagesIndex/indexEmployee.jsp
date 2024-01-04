@@ -6,7 +6,10 @@
   Time: 8:24 PM
   To change this template use File | Settings | File Templates.
 --%>
-<c:import url="../../header.jsp" />
-<h3>Employee</h3>
 
-<c:import url="../../footer.jsp" />
+
+<c:import url="../../headerEmployee.jsp"/>
+    <h3>${member.fullName}</h3>
+    <input type="hidden" id="fullName" value="${member.fullName}">
+<c:import url="../../footerAdmin.jsp"/>
+

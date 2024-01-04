@@ -38,5 +38,9 @@
         integrity="sha256-M748/Ss9JXTdKfvK7guV7Upt/GE4hFMoVCDILqtuV3M="
         crossorigin="anonymous"
 ></script>
+<script>
+  const label = ${memberJs};
+</script>
 <script src="../../script.js"></script>
+
 </html>

@@ -6,7 +6,7 @@
   Time: 8:24 PM
   To change this template use File | Settings | File Templates.
 --%>
-<c:import url="../../header.jsp"/>
+<c:import url="../../headerAdmin.jsp"/>
 <main class="h-full overflow-y-auto">
     <div class="container px-6 mx-auto grid">
         <h2
@@ -28,21 +28,21 @@
                 >
                     <!-- Chart legend -->
                     <div class="flex items-center">
-                    <span
-                            class="inline-block w-3 h-3 mr-1 bg-blue-500 rounded-full"
-                    ></span>
+    <span
+            class="inline-block w-3 h-3 mr-1 bg-blue-500 rounded-full"
+    ></span>
                         <span>Shirts</span>
                     </div>
                     <div class="flex items-center">
-                    <span
-                            class="inline-block w-3 h-3 mr-1 bg-teal-600 rounded-full"
-                    ></span>
+    <span
+            class="inline-block w-3 h-3 mr-1 bg-teal-600 rounded-full"
+    ></span>
                         <span>Shoes</span>
                     </div>
                     <div class="flex items-center">
-                    <span
-                            class="inline-block w-3 h-3 mr-1 bg-purple-600 rounded-full"
-                    ></span>
+    <span
+            class="inline-block w-3 h-3 mr-1 bg-purple-600 rounded-full"
+    ></span>
                         <span>Bags</span>
                     </div>
                 </div>
@@ -59,15 +59,15 @@
                 >
                     <!-- Chart legend -->
                     <div class="flex items-center">
-                    <span
-                            class="inline-block w-3 h-3 mr-1 bg-teal-600 rounded-full"
-                    ></span>
+    <span
+            class="inline-block w-3 h-3 mr-1 bg-teal-600 rounded-full"
+    ></span>
                         <span>Organic</span>
                     </div>
                     <div class="flex items-center">
-                    <span
-                            class="inline-block w-3 h-3 mr-1 bg-purple-600 rounded-full"
-                    ></span>
+    <span
+            class="inline-block w-3 h-3 mr-1 bg-purple-600 rounded-full"
+    ></span>
                         <span>Paid</span>
                     </div>
                 </div>
@@ -120,11 +120,11 @@
                         $ 863.45
                     </td>
                     <td class="px-4 py-3 text-xs">
-                        <span
-                                class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100"
-                        >
-                          Approved
-                        </span>
+    <span
+            class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100"
+    >
+    Approved
+    </span>
                     </td>
                     <td class="px-4 py-3 text-sm">
                         6/10/2020
@@ -161,11 +161,11 @@
                         $ 369.95
                     </td>
                     <td class="px-4 py-3 text-xs">
-                        <span
-                                class="px-2 py-1 font-semibold leading-tight text-orange-700 bg-orange-100 rounded-full dark:text-white dark:bg-orange-600"
-                        >
-                          Pending
-                        </span>
+    <span
+            class="px-2 py-1 font-semibold leading-tight text-orange-700 bg-orange-100 rounded-full dark:text-white dark:bg-orange-600"
+    >
+    Pending
+    </span>
                     </td>
                     <td class="px-4 py-3 text-sm">
                         6/10/2020
@@ -202,11 +202,11 @@
                         $ 86.00
                     </td>
                     <td class="px-4 py-3 text-xs">
-                        <span
-                                class="px-2 py-1 font-semibold leading-tight text-red-700 bg-red-100 rounded-full dark:text-red-100 dark:bg-red-700"
-                        >
-                          Denied
-                        </span>
+    <span
+            class="px-2 py-1 font-semibold leading-tight text-red-700 bg-red-100 rounded-full dark:text-red-100 dark:bg-red-700"
+    >
+    Denied
+    </span>
                     </td>
                     <td class="px-4 py-3 text-sm">
                         6/10/2020
@@ -243,11 +243,11 @@
                         $ 1276.45
                     </td>
                     <td class="px-4 py-3 text-xs">
-                        <span
-                                class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100"
-                        >
-                          Approved
-                        </span>
+    <span
+            class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100"
+    >
+    Approved
+    </span>
                     </td>
                     <td class="px-4 py-3 text-sm">
                         6/10/2020
@@ -284,11 +284,11 @@
                         $ 863.45
                     </td>
                     <td class="px-4 py-3 text-xs">
-                        <span
-                                class="px-2 py-1 font-semibold leading-tight text-gray-700 bg-gray-100 rounded-full dark:text-gray-100 dark:bg-gray-700"
-                        >
-                          Expired
-                        </span>
+    <span
+            class="px-2 py-1 font-semibold leading-tight text-gray-700 bg-gray-100 rounded-full dark:text-gray-100 dark:bg-gray-700"
+    >
+    Expired
+    </span>
                     </td>
                     <td class="px-4 py-3 text-sm">
                         6/10/2020
@@ -325,11 +325,11 @@
                         $ 863.45
                     </td>
                     <td class="px-4 py-3 text-xs">
-                        <span
-                                class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100"
-                        >
-                          Approved
-                        </span>
+    <span
+            class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100"
+    >
+    Approved
+    </span>
                     </td>
                     <td class="px-4 py-3 text-sm">
                         6/10/2020
@@ -366,11 +366,11 @@
                         $ 863.45
                     </td>
                     <td class="px-4 py-3 text-xs">
-                        <span
-                                class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100"
-                        >
-                          Approved
-                        </span>
+    <span
+            class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100"
+    >
+    Approved
+    </span>
                     </td>
                     <td class="px-4 py-3 text-sm">
                         6/10/2020
@@ -407,11 +407,11 @@
                         $ 863.45
                     </td>
                     <td class="px-4 py-3 text-xs">
-                        <span
-                                class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100"
-                        >
-                          Approved
-                        </span>
+    <span
+            class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100"
+    >
+    Approved
+    </span>
                     </td>
                     <td class="px-4 py-3 text-sm">
                         6/10/2020
@@ -448,11 +448,11 @@
                         $ 863.45
                     </td>
                     <td class="px-4 py-3 text-xs">
-                        <span
-                                class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100"
-                        >
-                          Approved
-                        </span>
+    <span
+            class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100"
+    >
+    Approved
+    </span>
                     </td>
                     <td class="px-4 py-3 text-sm">
                         6/10/2020
@@ -463,4 +463,5 @@
         </div>
     </div>
 
-    <c:import url="../../footer.jsp"/>
+</main>
+<c:import url="../../footerAdmin.jsp"/>
