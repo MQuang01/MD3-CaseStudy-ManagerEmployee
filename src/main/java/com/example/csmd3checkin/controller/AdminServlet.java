@@ -14,7 +14,28 @@ import java.io.IOException;
 public class AdminServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        showAdminPage(req, resp);
+        String action = req.getParameter("act");
+        if(action == null){
+            action = "";
+        }
+
+        switch (action){
+            case "add-task":
+                showAddTaskForm(req, resp);
+                break;
+            default:
+                showAdminPage(req, resp);
+                break;
+        }
+
+    }
+
+    private void showAddTaskForm(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        HttpSession session = req.getSession();
+        Member member = (Member) session.getAttribute("account");
+        req.setAttribute("member", member);
+
+        req.getRequestDispatcher("jsp/menuAdmin/add-task.jsp").forward(req, resp);
     }
 
     private void showAdminPage(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
