@@ -58,7 +58,7 @@
 <body>
 <div class="btn-back">
   <button class="btn btn-intermediate">
-    <a href="" style="text-decoration: none">Back</a>
+    <a href="${linkBack}" style="text-decoration: none">Back</a>
   </button>
 </div>
 

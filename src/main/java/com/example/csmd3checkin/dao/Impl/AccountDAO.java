@@ -11,6 +11,7 @@ import java.sql.SQLException;
 
 public class AccountDAO extends DBConnect implements IAccountDAO {
     private static final String SELECT_ACCOUNT = "SELECT * FROM accounts WHERE username = ? AND password = ?";
+    private static final String SELECT_ACCOUNT_BY_ID = "SELECT * FROM accounts WHERE ( id = ?)";
 
     public AccountDAO() {
     }
@@ -24,6 +25,29 @@ public class AccountDAO extends DBConnect implements IAccountDAO {
             ResultSet rs = preparedStatement.executeQuery();
             if(rs.next()){
                 int id = rs.getInt("id");
+                String username = rs.getString("username");
+                String psw = rs.getString("password");
+                String nameRole = rs.getString("role");
+
+                ERole role = ERole.findByName(nameRole);
+
+                return new Account(id, username, psw, role);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return null;
+    }
+
+    @Override
+    public Account findById(int id) {
+        try (PreparedStatement preparedStatement = getConnection().prepareStatement(SELECT_ACCOUNT_BY_ID)){
+            preparedStatement.setInt(1, id);
+
+            ResultSet rs = preparedStatement.executeQuery();
+            if(rs.next()){
                 String username = rs.getString("username");
                 String psw = rs.getString("password");
                 String nameRole = rs.getString("role");
