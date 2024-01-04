@@ -41,13 +41,13 @@ public class AuthServlet extends HttpServlet {
         if(account != null){
             if(account.getRole().equals(ERole.ADMIN)){
 
-                session.setAttribute("account", memberDAO.selectMemberById(account.getId()));
+                session.setAttribute("account", memberDAO.selectMemberById(account.getId(), account));
 
                 resp.sendRedirect("/admin-page");
             }
             if (account.getRole().equals(ERole.EMPLOYEE)){
 
-                session.setAttribute("account", memberDAO.selectMemberById(account.getId()));
+                session.setAttribute("account", memberDAO.selectMemberById(account.getId(), account));
 
                 resp.sendRedirect("/employee-page");
             }

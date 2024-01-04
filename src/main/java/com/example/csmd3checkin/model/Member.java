@@ -10,7 +10,7 @@ public class Member {
     private String email;
     private int teamId;
     private int accountId;
-
+    private Account account;
     public Member() {
     }
 
@@ -22,6 +22,16 @@ public class Member {
         this.email = email;
         this.teamId = teamId;
         this.accountId = accountId;
+    }
+
+    public Member(int id, String fullName, String phoneNum, LocalDate doB, String email, int teamId, Account account) {
+        this.id = id;
+        this.fullName = fullName;
+        this.phoneNum = phoneNum;
+        this.doB = doB;
+        this.email = email;
+        this.teamId = teamId;
+        this.account = account;
     }
 
     public int getId() {
@@ -78,6 +88,14 @@ public class Member {
 
     public void setAccountId(int accountId) {
         this.accountId = accountId;
+    }
+
+    public Account getAccount() {
+        return account;
+    }
+
+    public void setAccount(Account account) {
+        this.account = account;
     }
 
     @Override

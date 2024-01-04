@@ -463,4 +463,6 @@
         </div>
     </div>
 </main>
+
 <c:import url="../../footer.jsp"/>
+
