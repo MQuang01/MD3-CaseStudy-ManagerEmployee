@@ -4,5 +4,7 @@ import com.example.csmd3checkin.model.Account;
 
 public interface IAccountDAO {
     Account checkLoginCorrect(Account account);
-    Account findById(int id);
+    void insertAccount(Account account);
+
+    int checkNewAccountId();
 }

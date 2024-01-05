@@ -8,12 +8,16 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public interface ITimeKeepingDAO {
+    public void insertTimeKeeping(TimeKeeping timeKeeping);
 
     TimeKeeping selectTimeKeeping(Member member, LocalDateTime day);
 
     List<TimeKeeping> selectAllTimeKeeping();
 
-    boolean deleteTimeKeeping(int id) throws SQLException;
+
+    boolean updateTimeKeeping(TimeKeeping timeKeeping);
+
+    boolean deleteTimeKeeping(int id);
 
     boolean updateTimeCheckin(Member member);
 

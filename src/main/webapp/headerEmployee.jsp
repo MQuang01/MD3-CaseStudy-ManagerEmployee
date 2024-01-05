@@ -11,7 +11,7 @@
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Company Dashboard</title>
+    <title>Windmill Dashboard</title>
     <link
             href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
             rel="stylesheet"
@@ -84,6 +84,9 @@
     >
         <div class="py-4 text-gray-500 dark:text-gray-400">
             <button class="btn btn-intermediate">
+
+                <a href="/manager-empl?act=checkin">Checkin Here</a>
+
                 <a href="/timekeeping">${word}</a>
             </button>
 

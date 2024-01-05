@@ -7,6 +7,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 
+
 <c:import url="../../headerEmployee.jsp"/>
     <h3>${member.fullName}</h3>
     <input type="hidden" id="fullName" value="${member.fullName}">
