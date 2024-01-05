@@ -1,18 +1,25 @@
 package com.example.csmd3checkin.dao;
 
+import com.example.csmd3checkin.model.Member;
 import com.example.csmd3checkin.model.TimeKeeping;
 
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public interface ITimeKeepingDAO {
-    public void insertTimeKeeping(TimeKeeping timeKeeping) ;
+    public void insertTimeKeeping(TimeKeeping timeKeeping);
 
-    public TimeKeeping selectTimeKeepingById(int id);
+    TimeKeeping selectTimeKeeping(Member member, LocalDateTime day);
 
-    public List<TimeKeeping> selectAllTimeKeeping();
+    List<TimeKeeping> selectAllTimeKeeping();
 
-    public boolean deleteTimeKeeping(int id);
 
-    public boolean updateTimeKeeping(TimeKeeping timeKeeping);
+    boolean updateTimeKeeping(TimeKeeping timeKeeping);
+
+    boolean deleteTimeKeeping(int id);
+
+    boolean updateTimeCheckin(Member member);
+
+    boolean updateTimeCheckout(Member member);
 }

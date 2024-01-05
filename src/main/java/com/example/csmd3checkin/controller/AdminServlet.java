@@ -1,8 +1,5 @@
 package com.example.csmd3checkin.controller;
 
-import com.example.csmd3checkin.dao.IAccountDAO;
-import com.example.csmd3checkin.dao.IMemberDAO;
-import com.example.csmd3checkin.dao.ITeamDAO;
 import com.example.csmd3checkin.dao.Impl.AccountDAO;
 import com.example.csmd3checkin.dao.Impl.MemberDAO;
 import com.example.csmd3checkin.dao.Impl.TeamDAO;
@@ -11,6 +8,7 @@ import com.example.csmd3checkin.model.Account;
 import com.example.csmd3checkin.model.Member;
 import com.example.csmd3checkin.model.Team;
 import com.example.csmd3checkin.model.enumration.ERole;
+import com.example.csmd3checkin.model.TimeKeeping;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -22,19 +20,23 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-@WebServlet(name= "adminServlets", value = "/admin-page")
+@WebServlet(name = "adminServlets", value = "/admin-page")
 public class AdminServlet extends HttpServlet {
-    private IMemberDAO memberDAO;
-    private IAccountDAO accountDAO;
-    private ITeamDAO teamDAO;
+    private MemberDAO memberDAO;
+    private AccountDAO accountDAO;
+    private TimeKeepingDAO timeKeepingDAO;
+    private TeamDAO teamDAO;
+
     public void init() {
         memberDAO = new MemberDAO();
         accountDAO = new AccountDAO();
+        timeKeepingDAO = new TimeKeepingDAO();
         teamDAO = new TeamDAO();
     }
 
@@ -79,7 +81,13 @@ public class AdminServlet extends HttpServlet {
     private void showAdminPage(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
         Member member = (Member) session.getAttribute("account");
+        TimeKeeping timeKeeping = timeKeepingDAO.selectTimeKeeping(member, LocalDateTime.now());
+
+        String wordBoxCheck = timeKeeping.isStatus() ? "Check out" : "Check in";
+        req.setAttribute("word", wordBoxCheck);
+
         req.setAttribute("member", member);
+
 
         req.getRequestDispatcher("jsp/pagesIndex/indexAdmin.jsp").forward(req, resp);
     }
@@ -96,14 +104,15 @@ public class AdminServlet extends HttpServlet {
 
         request.getRequestDispatcher("jsp/menuAdmin/add-account.jsp").forward(request, response);
     }
+
     private void showAddMemberForm(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 //        HttpSession session = request.getSession();
 //        Member member = (Member) session.getAttribute("account");
 //        request.setAttribute("member", member);
 
-        int newAccountId= accountDAO.checkNewAccountId();
-        System.out.println("newAccountId: "+newAccountId);
+        int newAccountId = accountDAO.checkNewAccountId();
+        System.out.println("newAccountId: " + newAccountId);
         request.setAttribute("newAccountId", newAccountId);
 //        request.setAttribute("newAccountId", request.getParameter("currentId"));
         List<Team> teamList = teamDAO.selectAllTeam();
@@ -126,6 +135,7 @@ public class AdminServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
         String action = req.getParameter("act");
         if (action == null) {
             action = "";
@@ -136,7 +146,7 @@ public class AdminServlet extends HttpServlet {
                     insertMember(req, resp);
                     break;
                 case "add-account":
-                    insertAccount(req,resp);
+                    insertAccount(req, resp);
                     break;
             }
         } catch (SQLException ex) {
@@ -165,14 +175,13 @@ public class AdminServlet extends HttpServlet {
     }
 
     private void insertAccount(HttpServletRequest request, HttpServletResponse response)
-            throws  IOException, ServletException {
+            throws IOException, ServletException {
         Account newAccount = new Account(
                 request.getParameter("username"),
                 request.getParameter("password"),
                 ERole.findByName(request.getParameter("role"))
         );
         accountDAO.insertAccount(newAccount);
-
 
 
 //        request.setAttribute("currentId",newAccountId);
