@@ -90,12 +90,16 @@
 </head>
 
 <body>
+
 <div class="btn-back">
     <button class="btn btn-intermediate">
         <a href="${linkBack}" style="text-decoration: none">Back</a>
     </button>
 </div>
 <h3>Check in</h3>
+<div class="loading-container" id="loadingContainer">
+    <div class="spinner"></div>
+</div>
 <div class="container">
     <div id="camera"></div>
     <button class="button-29" role="button" onclick="snapShot()">Click here</button>
