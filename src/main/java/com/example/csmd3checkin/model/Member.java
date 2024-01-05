@@ -24,6 +24,15 @@ public class Member {
         this.accountId = accountId;
     }
 
+    public Member(String fullName, String phoneNum, LocalDate doB, String email, int teamId, int accountId) {
+        this.fullName = fullName;
+        this.phoneNum = phoneNum;
+        this.doB = doB;
+        this.email = email;
+        this.teamId = teamId;
+        this.accountId = accountId;
+    }
+
     public int getId() {
         return id;
     }

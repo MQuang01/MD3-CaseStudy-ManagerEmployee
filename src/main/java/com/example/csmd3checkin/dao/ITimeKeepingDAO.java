@@ -6,13 +6,13 @@ import java.sql.SQLException;
 import java.util.List;
 
 public interface ITimeKeepingDAO {
-    public void insertTimeKeeping(TimeKeeping timeKeeping) throws SQLException;
+    public void insertTimeKeeping(TimeKeeping timeKeeping) ;
 
     public TimeKeeping selectTimeKeepingById(int id);
 
     public List<TimeKeeping> selectAllTimeKeeping();
 
-    public boolean deleteTimeKeeping(int id) throws SQLException;
+    public boolean deleteTimeKeeping(int id);
 
-    public boolean updateTimeKeeping(TimeKeeping timeKeeping) throws SQLException;
+    public boolean updateTimeKeeping(TimeKeeping timeKeeping);
 }

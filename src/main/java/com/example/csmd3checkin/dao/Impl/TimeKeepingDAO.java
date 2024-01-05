@@ -23,7 +23,7 @@ public class TimeKeepingDAO extends DBConnect implements ITimeKeepingDAO {
 
 
     @Override
-    public void insertTimeKeeping(TimeKeeping timeKeeping) throws SQLException {
+    public void insertTimeKeeping(TimeKeeping timeKeeping) {
 
     }
 
@@ -69,12 +69,12 @@ public class TimeKeepingDAO extends DBConnect implements ITimeKeepingDAO {
     }
 
     @Override
-    public boolean deleteTimeKeeping(int id) throws SQLException {
+    public boolean deleteTimeKeeping(int id)  {
         return false;
     }
 
     @Override
-    public boolean updateTimeKeeping(TimeKeeping timeKeeping) throws SQLException {
+    public boolean updateTimeKeeping(TimeKeeping timeKeeping) {
         return false;
     }
 

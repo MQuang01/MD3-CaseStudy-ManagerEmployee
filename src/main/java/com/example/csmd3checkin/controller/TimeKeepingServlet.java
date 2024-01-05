@@ -2,6 +2,7 @@ package com.example.csmd3checkin.controller;
 
 import com.example.csmd3checkin.dao.ITimeKeepingDAO;
 import com.example.csmd3checkin.dao.Impl.TimeKeepingDAO;
+import com.example.csmd3checkin.dao.Util;
 import com.example.csmd3checkin.model.TimeKeeping;
 
 import javax.servlet.RequestDispatcher;
@@ -14,6 +15,8 @@ import java.io.IOException;
 import java.time.LocalTime;
 import java.util.Arrays;
 import java.util.List;
+
+import static com.example.csmd3checkin.dao.Util.checkLateOnTimeAbsent;
 
 @WebServlet(name="manager-empl", value = "/timekeeping")
 public class TimeKeepingServlet extends HttpServlet {
@@ -57,18 +60,5 @@ public class TimeKeepingServlet extends HttpServlet {
 
     }
 
-    private int[] checkLateOnTimeAbsent(List<TimeKeeping> listTimeKeeping){
-        int[] arr={0,0,0}; //late,on time, no check
-        for(TimeKeeping list: listTimeKeeping){
-            if (!list.isStatus()){
-                arr[2]++;
-            } else if(list.getTimeCheckin().isBefore(LocalTime.of(8, 0, 0))){
-                arr[0]++;
-            } else {
-                arr[1]++;
-            }
-        }
 
-        return arr;
-    }
 }
