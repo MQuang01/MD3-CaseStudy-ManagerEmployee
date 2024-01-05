@@ -84,7 +84,12 @@
     >
         <div class="py-4 text-gray-500 dark:text-gray-400">
             <button class="btn btn-intermediate">
-                <a href="/timekeeping">${word}</a>
+                <a href="/timekeeping">
+                    <%
+                        String word = (String) session.getAttribute("word");
+                    %>
+                    <%= word%>
+                </a>
             </button>
 
             <ul class="mt-6">
@@ -154,7 +159,7 @@
             x-transition:leave="transition ease-in-out duration-150"
             x-transition:leave-start="opacity-100"
             x-transition:leave-end="opacity-0"
-            class="fixed inset-0 z-10 flex items-end bg-black bg-opacity-50 sm:items-center sm:justify-center"
+            class="fixed inset-0 z-10 flex items-end bg-black bg-opacity-50 sm:items-center sm:justify-center hidden"
     ></div>
 
     <div class="flex flex-col flex-1 w-full">

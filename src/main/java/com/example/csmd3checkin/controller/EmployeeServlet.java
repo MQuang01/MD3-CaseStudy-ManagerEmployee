@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @WebServlet(name= "employeeServlets", value = "/employee-page")
 public class EmployeeServlet extends HttpServlet {
@@ -29,8 +30,11 @@ public class EmployeeServlet extends HttpServlet {
         Member member = (Member) session.getAttribute("account");
         TimeKeeping timeKeeping = timeKeepingDAO.selectTimeKeeping(member, LocalDateTime.now());
 
+        List<TimeKeeping> timeKeepingList = timeKeepingDAO.selectTimeKeepingOf(member);
+
         String wordBoxCheck = timeKeeping.isStatus() ? "Check out" : "Check in";
-        req.setAttribute("word", wordBoxCheck);
+        session.setAttribute("word", wordBoxCheck);
+        req.setAttribute("listCheckin", timeKeepingList);
         req.setAttribute("member", member);
 
         req.getRequestDispatcher("jsp/pagesIndex/indexEmployee.jsp").forward(req, resp);

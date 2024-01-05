@@ -1,0 +1,12 @@
+.filter-time-keeping {
+    background-color: white;
+    display: flex;
+    padding: 10px;
+    margin: 10px 10px 20px;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.px-4 {
+    width: 150px;
+}

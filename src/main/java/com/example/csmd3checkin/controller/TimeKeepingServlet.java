@@ -7,7 +7,6 @@ import com.example.csmd3checkin.model.TimeKeeping;
 import com.example.csmd3checkin.model.enumration.ERole;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -89,11 +88,11 @@ public class TimeKeepingServlet extends HttpServlet {
 
     private void showTimeKeeping(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 //        request.getRequestDispatcher("/login/login.jsp").forward(req,resp);
-
-        List<TimeKeeping> listTimeKeeping = timeKeepingDAO.selectAllTimeKeeping();
-        int[] checkLateTimeAb= checkLateOnTimeAbsent(listTimeKeeping);
-
-        request.setAttribute("listTimeKeepingStatus", checkLateTimeAb);
+//
+//        List<TimeKeeping> listTimeKeeping = timeKeepingDAO.selectTimeKeepingOf();
+//        int[] checkLateTimeAb= checkLateOnTimeAbsent(listTimeKeeping);
+//
+//        request.setAttribute("listTimeKeepingStatus", checkLateTimeAb);
         request.getRequestDispatcher("index.jsp").forward(request, response);
     }
 

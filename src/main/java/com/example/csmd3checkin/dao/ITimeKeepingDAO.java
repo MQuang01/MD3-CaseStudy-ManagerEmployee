@@ -11,7 +11,7 @@ public interface ITimeKeepingDAO {
 
     TimeKeeping selectTimeKeeping(Member member, LocalDateTime day);
 
-    List<TimeKeeping> selectAllTimeKeeping();
+    List<TimeKeeping> selectTimeKeepingOf(Member member);
 
     boolean deleteTimeKeeping(int id) throws SQLException;
 
