@@ -56,7 +56,7 @@ Webcam.set({
 });
 Webcam.attach("#camera");
 
-async function snapShot() {
+async function snapShotCheckin() {
     Webcam.snap(async function (data_uri) {
         formCaptured.innerHTML =
             '<img id="image" src="' + data_uri + '" height = 450 width = 450 />';
@@ -106,44 +106,68 @@ async function snapShot() {
 
             drawBox.draw(canvas);
             setTimeout(function (){
-                window.location.href = "/timekeeping?act=getRequestJs"
+                window.location.href = "/timekeeping?act=req-checkin"
             }, 2000)
 
         }
     });
 }
 
-// fileInput.addEventListener('change', async (e) =>{
-//     const file = fileInput.files[0]; // lấy duy nhất 1 ảnh
+async function snapShotCheckout() {
+    Webcam.snap(async function (data_uri) {
+        formCaptured.innerHTML =
+            '<img id="image" src="' + data_uri + '" height = 450 width = 450 />';
 
-//     const image = await faceapi.bufferToImage(file);
-//     const canvas = faceapi.createCanvasFromMedia(image);
+        const capturedImage = document.getElementById("image");
 
-//     container.innerHTML = '';
-//     container.append(image);
-//     container.append(canvas);
+        // Tạo một blob từ ảnh để sử dụng với faceapi.bufferToImage
+        capturedImage.crossOrigin = "Anonymous"; // Đảm bảo truy cập tới ảnh qua cors
+        const blob = await fetch(data_uri).then((response) => response.blob());
 
-//     const size = {
-//         width : image.width,
-//         height : image.height
-//     }
+        const image = await faceapi.bufferToImage(blob);
+        const canvas = faceapi.createCanvasFromMedia(image);
+        formCaptured.append(canvas);
 
-//     faceapi.matchDimensions(canvas, size)
+        const size = {
+            width: 480,
+            height: 360,
+        };
 
-//     const detections = await faceapi
-//     .detectAllFaces(image)
-//     .withFaceLandmarks()
-//     .withFaceDescriptors();
-//   const resizedDetections = faceapi.resizeResults(detections, size);
+        faceapi.matchDimensions(canvas, size);
 
-//   for (const detection of resizedDetections) {
-//     const bestMatch = faceMatcher.findBestMatch(detection.descriptor);
-//     const label = `${bestMatch.label} (${Math.round(
-//       bestMatch.distance * 100
-//     )}%)`;
-//     const drawBox = new faceapi.draw.DrawBox(detection.detection.box, {
-//       label: label,
-//     });
-//     drawBox.draw(canvas);
-//   }
-// })
+        const detections = await faceapi
+            .detectAllFaces(image)
+            .withFaceLandmarks()
+            .withFaceDescriptors();
+        const resizedDetections = faceapi.resizeResults(detections, size);
+
+
+        for (const detection of resizedDetections) {
+            const bestMatch = faceMatcher.findBestMatch(detection.descriptor);
+
+            if (bestMatch.label == 'unknown') {
+                Toastify({
+                    text: "Không thể nhận diện. Vui lòng thử lại !",
+                }).showToast();
+                return;
+            }
+
+            const label = `${bestMatch.label} (${Math.round(
+                bestMatch.distance * 100
+            )}%)`;
+
+
+            const drawBox = new faceapi.draw.DrawBox(detection.detection.box, {
+                label: label,
+            });
+
+            drawBox.draw(canvas);
+            setTimeout(function (){
+                window.location.href = "/timekeeping?act=req-checkout"
+            }, 2000)
+
+        }
+    });
+}
+
+

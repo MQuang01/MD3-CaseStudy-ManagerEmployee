@@ -9,11 +9,13 @@ import java.util.List;
 
 public interface ITimeKeepingDAO {
 
-    public TimeKeeping selectTimeKeeping(Member member, LocalDateTime day);
+    TimeKeeping selectTimeKeeping(Member member, LocalDateTime day);
 
-    public List<TimeKeeping> selectAllTimeKeeping();
+    List<TimeKeeping> selectAllTimeKeeping();
 
-    public boolean deleteTimeKeeping(int id) throws SQLException;
+    boolean deleteTimeKeeping(int id) throws SQLException;
 
-    public boolean updateTimeCheckin(Member member);
+    boolean updateTimeCheckin(Member member);
+
+    boolean updateTimeCheckout(Member member);
 }

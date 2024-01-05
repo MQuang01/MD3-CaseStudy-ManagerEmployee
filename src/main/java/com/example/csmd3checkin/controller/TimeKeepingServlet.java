@@ -33,12 +33,31 @@ public class TimeKeepingServlet extends HttpServlet {
             action = "";
         }
         switch (action){
-            case "getRequestJs":
+            case "req-checkin":
                 checkInDB(req,resp);
+                break;
+            case "req-checkout":
+                checkOutDB(req, resp);
                 break;
             default:
                 showCheckinForm(req, resp);
                 break;
+        }
+    }
+
+    private void checkOutDB(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        HttpSession session = req.getSession();
+        Member member = (Member) session.getAttribute("account");
+
+        if(timeKeepingDAO.updateTimeCheckout(member)){
+            if (member.getAccount().getRole().equals(ERole.ADMIN)){
+                resp.sendRedirect("/admin-page");
+            }else {
+                resp.sendRedirect("/employee-page");
+            }
+        }else {
+            req.setAttribute("message", "Check-out failed in database");
+            resp.sendRedirect("/timekeeping");
         }
     }
 

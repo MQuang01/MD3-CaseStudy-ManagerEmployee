@@ -17,6 +17,7 @@ public class TimeKeepingDAO extends DBConnect implements ITimeKeepingDAO {
     private static final String SELECT_TIMEKEEPING = "select * from time_keepings where (`memberId` = ?) and (`day` like '%' ? '%')";
     private static final String SELECT_ALL_TIMEKEEPING = "select * from time_keepings";
     private static final String UPDATE_CHECK_IN_SQL = "UPDATE `time_keepings` SET `time_checkin` = ? , status = ? WHERE (`memberId` = ?) and (`day` like '%' ? '%')";
+    private static final String UPDATE_CHECK_OUT_SQL = "UPDATE `time_keepings` SET `time_checkout` = ? WHERE (`memberId` = ?) and (`day` like '%' ? '%')";
 
     //    private static final String UPDATE_CHECK_OUT_SQL =
     public TimeKeepingDAO() {
@@ -89,6 +90,24 @@ public class TimeKeepingDAO extends DBConnect implements ITimeKeepingDAO {
             preparedStatement.setInt(3, member.getId());
             Date dayCheck = Date.valueOf(LocalDate.now());
             preparedStatement.setDate(4, dayCheck);
+
+            preparedStatement.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public boolean updateTimeCheckout(Member member) {
+        try(PreparedStatement preparedStatement = getConnection().prepareStatement(UPDATE_CHECK_OUT_SQL)) {
+            LocalTime timeCheck = LocalTime.now();
+            preparedStatement.setTime(1, Time.valueOf(timeCheck));
+            preparedStatement.setInt(2, member.getId());
+            Date dayCheck = Date.valueOf(LocalDate.now());
+            preparedStatement.setDate(3, dayCheck);
 
             preparedStatement.executeUpdate();
             return true;

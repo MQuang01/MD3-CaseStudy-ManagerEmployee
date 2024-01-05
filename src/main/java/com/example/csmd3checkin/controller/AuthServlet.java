@@ -57,30 +57,20 @@ public class AuthServlet extends HttpServlet {
             Member member = memberDAO.selectMemberById(account.getId(), account);
             if(account.getRole().equals(ERole.ADMIN)){
 
-//                TimeKeeping timeKeeping = timeKeepingDAO.selectTimeKeeping(member, LocalDateTime.now());
-//
-//                String wordBoxCheck = timeKeeping.isStatus() ? "Check out" : "Check in";
-//
-//                session.setAttribute("account", member);
-//                req.setAttribute("w-Box-check", wordBoxCheck);
-//
-//                req.getRequestDispatcher("/admin-page").forward(req, resp);
+                session.setAttribute("account", member);
+
+                resp.sendRedirect("/admin-page");
             } else {
-//                session.setAttribute("account", memberDAO.selectMemberById(account.getId(), account));
-//                TimeKeeping timeKeeping = timeKeepingDAO.selectTimeKeeping(member, LocalDateTime.now());
-//
-//                String wordBoxCheck = timeKeeping.isStatus() ? "Check out" : "Check in";
-//                session.setAttribute("account", member);
-//
-//                req.setAttribute("w-Box-check", wordBoxCheck);
-//
-//                req.getRequestDispatcher("/employee-page").forward(req, resp);
+
+                session.setAttribute("account", member);
+
+                resp.sendRedirect("/employee-page");
             }
-            return;
+
         }else {
             req.setAttribute("message", "Login Failed!");
             req.getRequestDispatcher("jsp/login/login.jsp").forward(req, resp);
-            return;
+
         }
     }
 }
