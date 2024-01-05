@@ -7,7 +7,7 @@
   Time: 8:24 PM
   To change this template use File | Settings | File Templates.
 --%>
-
+<link rel="stylesheet" href="../../assetsEmployee/css/style.css">
 <c:import url="../../headerEmployee.jsp"/>
 
 <div class="filter-time-keeping">
@@ -48,31 +48,31 @@
                         class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800"
                 >
 
-<%--                <c:forEach var="line" items="${listCheckin}">--%>
+                <c:forEach var="line" items="${listCheckin}">
 
-<%--                    <tr class="text-gray-700 dark:text-gray-400">--%>
-<%--                        <td class="px-4 py-3">--%>
-<%--                            <div class="flex items-center text-sm">--%>
-<%--                                <p class="font-semibold">${line.day}</p>--%>
-<%--                            </div>--%>
-<%--                        </td>--%>
+                    <tr class="text-gray-700 dark:text-gray-400">
+                        <td class="px-4 py-3">
+                            <div class="flex items-center text-sm">
+                                <p class="font-semibold">${line.day}</p>
+                            </div>
+                        </td>
 
-<%--                        <td class="px-4 py-3 text-sm">--%>
-<%--                            ${line.timeCheckin ? 'Null' : line.timeCheckin}--%>
-<%--                        </td>--%>
-<%--                        <td class="px-4 py-3 text-sm">--%>
-<%--                            ${line.timeCheckout ? 'Null' : line.timeCheckout}--%>
-<%--                        </td>--%>
-<%--                        <td class="px-4 py-3 text-xs">--%>
-<%--                            <span--%>
-<%--                                    class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-full "--%>
-<%--                            >--%>
-<%--                            ${line.status ? "Checked" : "Uncheck"}--%>
-<%--                            </span>--%>
-<%--                        </td>--%>
-<%--                    </tr>--%>
+                        <td class="px-4 py-3 text-sm">
+                            ${line.timeCheckin == null ? 'Null' : line.timeCheckin}
+                        </td>
+                        <td class="px-4 py-3 text-sm">
+                            ${line.timeCheckout == null ? 'Null' : line.timeCheckout}
+                        </td>
+                        <td class="px-4 py-3 text-xs">
+                            <span
+                                    class="px-2 py-1 font-semibold leading-tight  <c:if test="${line.status}">text-green-700 bg-green-100</c:if> rounded-full <c:if test="${!line.status}">text-red-700 bg-red-100</c:if> "
+                            >
+                            ${line.status ? "Checked" : "Uncheck"}
+                            </span>
+                        </td>
+                    </tr>
 
-<%--                </c:forEach>--%>
+                </c:forEach>
 
 
                 </tbody>

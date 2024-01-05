@@ -28,6 +28,7 @@ public class EmployeeServlet extends HttpServlet {
     private void showEmployeePage(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
         Member member = (Member) session.getAttribute("account");
+
         TimeKeeping timeKeeping = timeKeepingDAO.selectTimeKeeping(member, LocalDateTime.now());
 
         List<TimeKeeping> timeKeepingList = timeKeepingDAO.selectTimeKeepingOf(member);
