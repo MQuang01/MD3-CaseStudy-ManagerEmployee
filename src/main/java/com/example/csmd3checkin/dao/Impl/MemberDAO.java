@@ -39,9 +39,8 @@ public class MemberDAO extends DBConnect implements IMemberDAO {
                 LocalDate date = rs.getDate("dob").toLocalDate();
                 String email = rs.getString("email");
                 int teamId = rs.getInt("teamId");
-                int accountId=rs.getInt("accounts_Id");
 
-                return new Member(idMember, nameMember, phoneMember, date, email, teamId, accountId);
+                return new Member(idMember, nameMember, phoneMember, date, email, teamId, account);
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);

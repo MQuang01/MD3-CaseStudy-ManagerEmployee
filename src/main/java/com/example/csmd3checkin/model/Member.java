@@ -42,6 +42,7 @@ public class Member {
         this.email = email;
         this.teamId = teamId;
         this.account = account;
+        this.accountId = account.getId();
     }
 
     public int getId() {
