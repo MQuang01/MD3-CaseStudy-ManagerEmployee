@@ -90,20 +90,7 @@ public class TimeKeepingServlet extends HttpServlet {
 
 
     private void showTimeKeeping(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//        request.getRequestDispatcher("/login/login.jsp").forward(req,resp);
 
-//
-//        List<TimeKeeping> listTimeKeeping = timeKeepingDAO.selectTimeKeepingOf();
-//        int[] checkLateTimeAb= checkLateOnTimeAbsent(listTimeKeeping);
-//
-//        request.setAttribute("listTimeKeepingStatus", checkLateTimeAb);
-//        request.getRequestDispatcher("index.jsp").forward(request, response);
-
-
-//        List<TimeKeeping> listTimeKeeping = timeKeepingDAO.selectAllTimeKeeping();
-//        int[] checkLateTimeAb= checkLateOnTimeAbsent(listTimeKeeping);
-//        System.out.println(Arrays.toString(checkLateTimeAb));
-//        request.setAttribute("dataCheckIn", checkLateTimeAb);
 
         request.getRequestDispatcher("jsp/pagesIndex/indexAdmin.jsp").forward(request, response);
 
