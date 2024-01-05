@@ -15,12 +15,12 @@ public class MemberDAO extends DBConnect implements IMemberDAO {
                                                     "inner join accounts on accounts.id = members.accounts_id " +
                                                         "where ( accounts.id = ? );";
 
-    private static final String SELECT_ALL_MEMBERs="select*from members";
-    private static final String SELECT_MEMBERs_BY_ID="select";
-    private static final String INSERT_MEMBERS_SQL = "INSERT INTO members (name,phone,dob,email,teamId,accountId) VALUES (?,?,?,?,?,?);";
+    private static final String SELECT_ALL_MEMBERS = "select * from members";
+//    private static final String SELECT_MEMBERs_BY_ID="select";
+    private static final String INSERT_MEMBERS_SQL = "INSERT INTO members (name,phone,dob,email,teamId,accounts_Id) VALUES (?,?,?,?,?,?);";
 
     private static final String DELETE_MEMBERS="delete from members where id = ?;";
-    private static final String UPDATE_MEMBER_SQL = "update members set name = ?,phone=?,dob=?,email= ?, country =?,teamId=?,accountId=? where id = ?;";
+    private static final String UPDATE_MEMBER_SQL = "update members set name = ?,phone=?,dob=?,email= ?, country =?,teamId=?,accounts_Id=? where id = ?;";
 
 
     public MemberDAO() {
@@ -39,7 +39,7 @@ public class MemberDAO extends DBConnect implements IMemberDAO {
                 LocalDate date = rs.getDate("dob").toLocalDate();
                 String email = rs.getString("email");
                 int teamId = rs.getInt("teamId");
-                int accountId=rs.getInt("accountId");
+                int accountId=rs.getInt("accounts_Id");
 
                 return new Member(idMember, nameMember, phoneMember, date, email, teamId, accountId);
             }
@@ -56,7 +56,7 @@ public class MemberDAO extends DBConnect implements IMemberDAO {
         List<Member> member=new ArrayList<>();
         try {
             Connection connection= getConnection();
-            PreparedStatement preparedStatement= connection.prepareStatement(SELECT_ALL_MEMBERs);
+            PreparedStatement preparedStatement= connection.prepareStatement(SELECT_ALL_MEMBERS);
             System.out.println(preparedStatement);
             ResultSet rs=preparedStatement.executeQuery();
 

@@ -2,9 +2,13 @@ package com.example.csmd3checkin.dao.Impl;
 
 import com.example.csmd3checkin.context.DBConnect;
 import com.example.csmd3checkin.dao.ITimeKeepingDAO;
+import com.example.csmd3checkin.model.Member;
 import com.example.csmd3checkin.model.TimeKeeping;
 
 import java.sql.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,6 +24,11 @@ public class TimeKeepingDAO extends DBConnect implements ITimeKeepingDAO {
 
 
     @Override
+    public void insertTimeKeeping(TimeKeeping timeKeeping) {
+
+    }
+
+    @Override
     public TimeKeeping selectTimeKeeping(Member member, LocalDateTime day) {
         try (PreparedStatement preparedStatement = getConnection().prepareStatement(SELECT_TIMEKEEPING)) {
             preparedStatement.setInt(1, member.getId());
@@ -32,48 +41,15 @@ public class TimeKeepingDAO extends DBConnect implements ITimeKeepingDAO {
                 Timestamp dayDB = rs.getTimestamp("day");
                 LocalDate dateTimeK = LocalDate.from(dayDB.toLocalDateTime());
                 boolean statusTimeK = rs.getBoolean("status");
-                public void insertTimeKeeping (TimeKeeping timeKeeping){
 
-                }
+                return new TimeKeeping(idTimeK, dateTimeK, statusTimeK, member);
             }
-        }
-    }
-
-    @Override
-    public boolean updateTimeCheckout(Member member) {
-        try (PreparedStatement preparedStatement = getConnection().prepareStatement(UPDATE_CHECK_OUT_SQL)) {
-            LocalTime timeCheck = LocalTime.now();
-            preparedStatement.setTime(1, Time.valueOf(timeCheck));
-            preparedStatement.setInt(2, member.getId());
-            Date dayCheck = Date.valueOf(LocalDate.now());
-            preparedStatement.setDate(3, dayCheck);
-
-            preparedStatement.executeUpdate();
-            return true;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        public boolean updateTimeKeeping (TimeKeeping timeKeeping){
-            return false;
-        }
-
-        private void printSQLException (SQLException ex){
-            for (Throwable e : ex) {
-                if (e instanceof SQLException) {
-                    e.printStackTrace(System.err);
-                    System.err.println("SQLState: " + ((SQLException) e).getSQLState());
-                    System.err.println("Error Code: " + ((SQLException) e).getErrorCode());
-                    System.err.println("Message: " + e.getMessage());
-                    Throwable t = ex.getCause();
-                    while (t != null) {
-                        System.out.println("Cause: " + t);
-                        t = t.getCause();
-                    }
-                }
-            }
-        }
+        return null;
     }
 
     @Override
@@ -94,22 +70,32 @@ public class TimeKeepingDAO extends DBConnect implements ITimeKeepingDAO {
             throw new RuntimeException(e);
         }
     }
-
     @Override
-    public boolean deleteTimeKeeping(int id) {
-        return false;
+    public boolean updateTimeCheckout(Member member) {
+        try (PreparedStatement preparedStatement = getConnection().prepareStatement(UPDATE_CHECK_OUT_SQL)) {
+            LocalTime timeCheck = LocalTime.now();
+            preparedStatement.setTime(1, Time.valueOf(timeCheck));
+            preparedStatement.setInt(2, member.getId());
+            Date dayCheck = Date.valueOf(LocalDate.now());
+            preparedStatement.setDate(3, dayCheck);
+
+            preparedStatement.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
-    public List<TimeKeeping> selectAllTimeKeeping() {
-        // using try-with-resources to avoid closing resources (boiler plate code)
-        List<TimeKeeping> timeKeepings = new ArrayList<>();
-        // Step 1: Establishing a Connection
-        try (Connection connection = getConnection();
 
-             // Step 2:Create a statement using connection object
-             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL_USERS);) {
-            System.out.println(preparedStatement);
-            // Step 3: Execute the query or update query
+    @Override
+    public List<TimeKeeping> selectTimeKeepingOf(Member member) {
+        List<TimeKeeping> listTime = new ArrayList<>();
+        // Step 1: Establishing a Connection
+        try (PreparedStatement preparedStatement = getConnection().prepareStatement(SELECT_ALL_TIMEKEEPING_OF)) {
+            preparedStatement.setInt(1, member.getId());
+
             ResultSet rs = preparedStatement.executeQuery();
 
             while (rs.next()) {
@@ -127,19 +113,6 @@ public class TimeKeepingDAO extends DBConnect implements ITimeKeepingDAO {
                 boolean status = rs.getBoolean("status");
 
                 listTime.add(new TimeKeeping(id, date, timeCheckin, timeCheckout, status, member));
-
-//                int id = rs.getInt("id");
-//                String name = rs.getString("name");
-
-                timeKeepings.add(new TimeKeeping(
-                        rs.getInt("id"),
-                        rs.getTimestamp("day").toLocalDateTime(),
-                        rs.getTime("time_checkin").toLocalTime(),
-                        rs.getTime("time_checkout").toLocalTime(),
-                        (rs.getInt("status") == 1),
-                        rs.getInt("members_id")
-
-                ));
             }
         } catch (SQLException e) {
             printSQLException(e);
@@ -149,13 +122,27 @@ public class TimeKeepingDAO extends DBConnect implements ITimeKeepingDAO {
         return listTime;
     }
 
-    @Override
-    public List<TimeKeeping> selectTimeKeepingOf(Member member) {
-        List<TimeKeeping> listTime = new ArrayList<>();
-        // Step 1: Establishing a Connection
-        try (PreparedStatement preparedStatement = getConnection().prepareStatement(SELECT_ALL_TIMEKEEPING_OF)) {
-            preparedStatement.setInt(1, member.getId());
-
-
+    private void printSQLException(SQLException ex) {
+        for (Throwable e : ex) {
+            if (e instanceof SQLException) {
+                e.printStackTrace(System.err);
+                System.err.println("SQLState: " + ((SQLException) e).getSQLState());
+                System.err.println("Error Code: " + ((SQLException) e).getErrorCode());
+                System.err.println("Message: " + e.getMessage());
+                Throwable t = ex.getCause();
+                while (t != null) {
+                    System.out.println("Cause: " + t);
+                    t = t.getCause();
+                }
+            }
         }
     }
+
+
+
+    @Override
+    public boolean deleteTimeKeeping(int id) {
+        return false;
+    }
+}
+

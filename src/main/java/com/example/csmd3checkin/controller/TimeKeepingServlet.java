@@ -47,6 +47,21 @@ public class TimeKeepingServlet extends HttpServlet {
         }
     }
 
+    private void checkInDB(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        HttpSession session = req.getSession();
+        Member member = (Member) session.getAttribute("account");
+
+        if(timeKeepingDAO.updateTimeCheckin(member)){
+            if (member.getAccount().getRole().equals(ERole.ADMIN)){
+                resp.sendRedirect("/admin-page");
+            }else {
+                resp.sendRedirect("/employee-page");
+            }
+        }else {
+            req.setAttribute("message", "Check-in failed in database");
+            resp.sendRedirect("/timekeeping");
+        }
+    }
     private void checkOutDB(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         HttpSession session = req.getSession();
         Member member = (Member) session.getAttribute("account");
@@ -62,7 +77,6 @@ public class TimeKeepingServlet extends HttpServlet {
             resp.sendRedirect("/timekeeping");
         }
     }
-
     private void showCheckinForm(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
 
         HttpSession session = req.getSession();
@@ -73,21 +87,7 @@ public class TimeKeepingServlet extends HttpServlet {
         req.getRequestDispatcher("/jsp/checkin/checkin.jsp").forward(req, resp);
     }
 
-    private void checkInDB(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        HttpSession session = req.getSession();
-        Member member = (Member) session.getAttribute("account");
 
-        if(timeKeepingDAO.updateTimeCheckin(member)){
-            if (member.getAccount().getRole().equals(ERole.ADMIN)){
-                resp.sendRedirect("/admin-page");
-            }else {
-                resp.sendRedirect("/employee-page");
-            }
-        }else {
-           req.setAttribute("message", "Check-in failed in database");
-           resp.sendRedirect("/timekeeping");
-        }
-    }
 
     private void showTimeKeeping(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 //        request.getRequestDispatcher("/login/login.jsp").forward(req,resp);
@@ -97,12 +97,13 @@ public class TimeKeepingServlet extends HttpServlet {
 //        int[] checkLateTimeAb= checkLateOnTimeAbsent(listTimeKeeping);
 //
 //        request.setAttribute("listTimeKeepingStatus", checkLateTimeAb);
-        request.getRequestDispatcher("index.jsp").forward(request, response);
+//        request.getRequestDispatcher("index.jsp").forward(request, response);
 
-        List<TimeKeeping> listTimeKeeping = timeKeepingDAO.selectAllTimeKeeping();
-        int[] checkLateTimeAb= checkLateOnTimeAbsent(listTimeKeeping);
-        System.out.println(Arrays.toString(checkLateTimeAb));
-        request.setAttribute("dataCheckIn", checkLateTimeAb);
+
+//        List<TimeKeeping> listTimeKeeping = timeKeepingDAO.selectAllTimeKeeping();
+//        int[] checkLateTimeAb= checkLateOnTimeAbsent(listTimeKeeping);
+//        System.out.println(Arrays.toString(checkLateTimeAb));
+//        request.setAttribute("dataCheckIn", checkLateTimeAb);
 
         request.getRequestDispatcher("jsp/pagesIndex/indexAdmin.jsp").forward(request, response);
 

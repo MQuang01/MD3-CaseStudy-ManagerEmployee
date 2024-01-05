@@ -40,6 +40,7 @@ public class TimeKeeping {
         this.day = day;
         this.status = status;
         this.member = member;
+        this.memberId = member.getId();
     }
 
     public int getId() {

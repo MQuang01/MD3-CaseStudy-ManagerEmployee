@@ -7,12 +7,7 @@
   Time: 8:24 PM
   To change this template use File | Settings | File Templates.
 --%>
-<<<<<<< HEAD
-<link rel="stylesheet" href="../../assetsAdmin/css/style.css">
-=======
 
-
->>>>>>> 742688afffdc7db447f37da7e85e11ce4e17a62a
 <c:import url="../../headerEmployee.jsp"/>
 
 <div class="filter-time-keeping">
@@ -53,31 +48,31 @@
                         class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800"
                 >
 
-                <c:forEach var="line" items="${listCheckin}">
+<%--                <c:forEach var="line" items="${listCheckin}">--%>
 
-                    <tr class="text-gray-700 dark:text-gray-400">
-                        <td class="px-4 py-3">
-                            <div class="flex items-center text-sm">
-                                <p class="font-semibold">${line.day}</p>
-                            </div>
-                        </td>
+<%--                    <tr class="text-gray-700 dark:text-gray-400">--%>
+<%--                        <td class="px-4 py-3">--%>
+<%--                            <div class="flex items-center text-sm">--%>
+<%--                                <p class="font-semibold">${line.day}</p>--%>
+<%--                            </div>--%>
+<%--                        </td>--%>
 
-                        <td class="px-4 py-3 text-sm">
-                            ${line.timeCheckin ? 'Null' : line.timeCheckin}
-                        </td>
-                        <td class="px-4 py-3 text-sm">
-                            ${line.timeCheckout ? 'Null' : line.timeCheckout}
-                        </td>
-                        <td class="px-4 py-3 text-xs">
-                            <span
-                                    class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-full "
-                            >
-                            ${line.status ? "Checked" : "Uncheck"}
-                            </span>
-                        </td>
-                    </tr>
+<%--                        <td class="px-4 py-3 text-sm">--%>
+<%--                            ${line.timeCheckin ? 'Null' : line.timeCheckin}--%>
+<%--                        </td>--%>
+<%--                        <td class="px-4 py-3 text-sm">--%>
+<%--                            ${line.timeCheckout ? 'Null' : line.timeCheckout}--%>
+<%--                        </td>--%>
+<%--                        <td class="px-4 py-3 text-xs">--%>
+<%--                            <span--%>
+<%--                                    class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-full "--%>
+<%--                            >--%>
+<%--                            ${line.status ? "Checked" : "Uncheck"}--%>
+<%--                            </span>--%>
+<%--                        </td>--%>
+<%--                    </tr>--%>
 
-                </c:forEach>
+<%--                </c:forEach>--%>
 
 
                 </tbody>
@@ -87,4 +82,3 @@
 </div>
 
 <c:import url="../../footerEmployee.jsp"/>
-<script src="../../assetsAdmin/js/script.js"></script>

@@ -80,8 +80,8 @@ public class AdminServlet extends HttpServlet {
 
     private void showAdminPage(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
-
         Member member = (Member) session.getAttribute("account");
+
         TimeKeeping timeKeeping = timeKeepingDAO.selectTimeKeeping(member, LocalDateTime.now());
 
         String wordBoxCheck = timeKeeping.isStatus() ? "Check out" : "Check in";

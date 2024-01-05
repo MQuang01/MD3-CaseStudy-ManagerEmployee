@@ -11,17 +11,17 @@
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Windmill Dashboard</title>
+    <title>Employee Dashboard</title>
     <link
             href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
             rel="stylesheet"
     />
-    <link rel="stylesheet" href="../../assetsAdmin/css/tailwind.output.css"/>
+    <link rel="stylesheet" href="../../assetsEmployee/css/tailwind.output.css"/>
     <script
             src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js"
             defer
     ></script>
-    <script src="../../assetsAdmin/js/init-alpine.js"></script>
+    <script src="../../assetsEmployee/js/init-alpine.js"></script>
     <link
             rel="stylesheet"
             href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.css"
@@ -30,8 +30,8 @@
             src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"
             defer
     ></script>
-    <script src="../../assetsAdmin/js/charts-lines.js" defer></script>
-    <script src="../../assetsAdmin/js/charts-pie.js" defer></script>
+    <script src="../../assetsEmployee/js/charts-lines.js" defer></script>
+    <script src="../../assetsEmployee/js/charts-pie.js" defer></script>
     <style>
 
         .btn {
@@ -84,19 +84,15 @@
     >
         <div class="py-4 text-gray-500 dark:text-gray-400">
             <button class="btn btn-intermediate">
-<<<<<<< HEAD
+
                 <a href="/timekeeping">
                     <%
                         String word = (String) session.getAttribute("word");
                     %>
                     <%= word%>
                 </a>
-=======
 
-                <a href="/manager-empl?act=checkin">Checkin Here</a>
 
-                <a href="/timekeeping">${word}</a>
->>>>>>> 742688afffdc7db447f37da7e85e11ce4e17a62a
             </button>
 
             <ul class="mt-6">
@@ -107,7 +103,7 @@
               ></span>
                     <a
                             class="inline-flex items-center w-full text-sm font-semibold text-gray-800 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 dark:text-gray-100"
-                            href="index.html"
+                            href="/employee-page"
                     >
                         <svg
                                 class="w-5 h-5"

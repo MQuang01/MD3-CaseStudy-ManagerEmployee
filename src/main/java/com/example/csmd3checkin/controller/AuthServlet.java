@@ -63,19 +63,8 @@ public class AuthServlet extends HttpServlet {
 
         if(account != null){
             Member member = memberDAO.selectMemberById(account.getId(), account);
+
             if(account.getRole().equals(ERole.ADMIN)){
-                List<TimeKeeping> listTimeKeeping = timeKeepingDAO.selectAllTimeKeeping();
-//                int[] checkLateTimeAb= checkLateOnTimeAbsent(listTimeKeeping);
-//                System.out.println(Arrays.toString(checkLateTimeAb));
-//                req.setAttribute("dataCheckIn", checkLateTimeAb);
-                req.getRequestDispatcher("jsp/pagesIndex/indexAdmin.jsp").forward(req, resp);
-
-                resp.sendRedirect("jsp/pagesIndex/indexAdmin.jsp");
-
-
-            }
-            if (account.getRole().equals(ERole.EMPLOYEE)){
-                resp.sendRedirect("jsp/pagesIndex/indexEmployee.jsp");
 
                 session.setAttribute("account", member);
 
