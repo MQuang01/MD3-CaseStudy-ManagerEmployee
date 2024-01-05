@@ -2,6 +2,7 @@ package com.example.csmd3checkin.controller;
 
 import com.example.csmd3checkin.dao.ITimeKeepingDAO;
 import com.example.csmd3checkin.dao.Impl.TimeKeepingDAO;
+
 import com.example.csmd3checkin.model.Member;
 import com.example.csmd3checkin.model.TimeKeeping;
 import com.example.csmd3checkin.model.enumration.ERole;
@@ -15,12 +16,14 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.time.LocalTime;
+import java.util.Arrays;
 import java.util.List;
 
-@WebServlet(name="timeKeepingServlets", value = "/timekeeping")
-public class TimeKeepingServlet extends HttpServlet {
+import static com.example.csmd3checkin.dao.Util.checkLateOnTimeAbsent;
 
-    private ITimeKeepingDAO timeKeepingDAO;
+@WebServlet(name="manager-empl", value = "/timekeeping")
+public class TimeKeepingServlet extends HttpServlet {
+    private TimeKeepingDAO timeKeepingDAO;
     public void init() {
         timeKeepingDAO = new TimeKeepingDAO();
     }
@@ -88,12 +91,21 @@ public class TimeKeepingServlet extends HttpServlet {
 
     private void showTimeKeeping(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 //        request.getRequestDispatcher("/login/login.jsp").forward(req,resp);
+
 //
 //        List<TimeKeeping> listTimeKeeping = timeKeepingDAO.selectTimeKeepingOf();
 //        int[] checkLateTimeAb= checkLateOnTimeAbsent(listTimeKeeping);
 //
 //        request.setAttribute("listTimeKeepingStatus", checkLateTimeAb);
         request.getRequestDispatcher("index.jsp").forward(request, response);
+
+        List<TimeKeeping> listTimeKeeping = timeKeepingDAO.selectAllTimeKeeping();
+        int[] checkLateTimeAb= checkLateOnTimeAbsent(listTimeKeeping);
+        System.out.println(Arrays.toString(checkLateTimeAb));
+        request.setAttribute("dataCheckIn", checkLateTimeAb);
+
+        request.getRequestDispatcher("jsp/pagesIndex/indexAdmin.jsp").forward(request, response);
+
     }
 
 
@@ -103,18 +115,4 @@ public class TimeKeepingServlet extends HttpServlet {
 
     }
 
-    private int[] checkLateOnTimeAbsent(List<TimeKeeping> listTimeKeeping){
-        int[] arr={0,0,0}; //late,on time, no check
-        for(TimeKeeping list: listTimeKeeping){
-            if (!list.isStatus()){
-                arr[2]++;
-            } else if(list.getTimeCheckin().isBefore(LocalTime.of(8, 0, 0))){
-                arr[0]++;
-            } else {
-                arr[1]++;
-            }
-        }
-
-        return arr;
-    }
 }

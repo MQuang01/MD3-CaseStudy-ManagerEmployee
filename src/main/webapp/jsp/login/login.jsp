@@ -92,9 +92,9 @@
 </form>
 
 </body>
-<%--    <script>--%>
-<%--        Toastify({--%>
-<%--            text: ${message},--%>
-<%--        }).showToast();--%>
-<%--    </script>--%>
+    <script>
+        Toastify({
+            text: ${message},
+        }).showToast();
+    </script>
 </html>

@@ -11,7 +11,7 @@
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Company Dashboard</title>
+    <title>Windmill Dashboard</title>
     <link
             href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
             rel="stylesheet"
@@ -84,12 +84,19 @@
     >
         <div class="py-4 text-gray-500 dark:text-gray-400">
             <button class="btn btn-intermediate">
+<<<<<<< HEAD
                 <a href="/timekeeping">
                     <%
                         String word = (String) session.getAttribute("word");
                     %>
                     <%= word%>
                 </a>
+=======
+
+                <a href="/manager-empl?act=checkin">Checkin Here</a>
+
+                <a href="/timekeeping">${word}</a>
+>>>>>>> 742688afffdc7db447f37da7e85e11ce4e17a62a
             </button>
 
             <ul class="mt-6">

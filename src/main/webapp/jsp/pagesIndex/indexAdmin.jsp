@@ -23,6 +23,7 @@
                     Revenue
                 </h4>
                 <canvas id="pie"></canvas>
+<%--                <input type="text" id="dataCheckIn" value="${dataCheckIn}">--%>
                 <div
                         class="flex justify-center mt-4 space-x-3 text-sm text-gray-600 dark:text-gray-400"
                 >
@@ -462,5 +463,6 @@
             </table>
         </div>
     </div>
+
 </main>
 <c:import url="../../footerAdmin.jsp"/>
