@@ -1,11 +1,12 @@
 package com.example.csmd3checkin.model;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 public class TimeKeeping {
     private int id;
-    private LocalDateTime day;
+    private LocalDate day;
     private LocalTime timeCheckin;
     private LocalTime timeCheckout;
     private boolean status;
@@ -15,7 +16,7 @@ public class TimeKeeping {
     public TimeKeeping() {
     }
 
-    public TimeKeeping(int id, LocalDateTime day, LocalTime timeCheckin, LocalTime timeCheckout, boolean status, int memberId) {
+    public TimeKeeping(int id, LocalDate day, LocalTime timeCheckin, LocalTime timeCheckout, boolean status, int memberId) {
         this.id = id;
         this.day = day;
         this.timeCheckin = timeCheckin;
@@ -23,11 +24,23 @@ public class TimeKeeping {
         this.status = status;
         this.memberId = memberId;
     }
-    public TimeKeeping(int id, LocalDateTime day, boolean status, Member member) {
+
+    public TimeKeeping(int id, LocalDate day, LocalTime timeCheckin, LocalTime timeCheckout, boolean status, Member member) {
+        this.id = id;
+        this.day = day;
+        this.timeCheckin = timeCheckin;
+        this.timeCheckout = timeCheckout;
+        this.status = status;
+        this.member = member;
+        this.memberId = member.getId();
+    }
+
+    public TimeKeeping(int id, LocalDate day, boolean status, Member member) {
         this.id = id;
         this.day = day;
         this.status = status;
         this.member = member;
+        this.memberId = member.getId();
     }
 
     public int getId() {
@@ -38,11 +51,11 @@ public class TimeKeeping {
         this.id = id;
     }
 
-    public LocalDateTime getDay() {
+    public LocalDate getDay() {
         return day;
     }
 
-    public void setDay(LocalDateTime day) {
+    public void setDay(LocalDate day) {
         this.day = day;
     }
 

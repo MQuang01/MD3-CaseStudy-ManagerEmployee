@@ -8,14 +8,11 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public interface ITimeKeepingDAO {
-    public void insertTimeKeeping(TimeKeeping timeKeeping);
+     void insertTimeKeeping(TimeKeeping timeKeeping);
 
     TimeKeeping selectTimeKeeping(Member member, LocalDateTime day);
 
-    List<TimeKeeping> selectAllTimeKeeping();
-
-
-    boolean updateTimeKeeping(TimeKeeping timeKeeping);
+    List<TimeKeeping> selectTimeKeepingOf(Member member);
 
     boolean deleteTimeKeeping(int id);
 

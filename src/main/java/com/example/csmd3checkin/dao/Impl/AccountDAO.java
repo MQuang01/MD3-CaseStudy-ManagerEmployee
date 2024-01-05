@@ -24,13 +24,14 @@ public class AccountDAO extends DBConnect implements IAccountDAO {
 
             ResultSet rs = preparedStatement.executeQuery();
             if(rs.next()){
+                int id = rs.getInt("id");
                 String username = rs.getString("username");
                 String psw = rs.getString("password");
                 String nameRole = rs.getString("role");
 
                 ERole role = ERole.findByName(nameRole);
 
-                return new Account(username, psw, role);
+                return new Account(id, username, psw, role);
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
