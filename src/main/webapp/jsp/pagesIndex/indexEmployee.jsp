@@ -10,5 +10,5 @@
 <c:import url="../../headerEmployee.jsp"/>
     <h3>${member.fullName}</h3>
     <input type="hidden" id="fullName" value="${member.fullName}">
-<c:import url="../../footerAdmin.jsp"/>
+<c:import url="../../footerEmployee.jsp"/>
 
