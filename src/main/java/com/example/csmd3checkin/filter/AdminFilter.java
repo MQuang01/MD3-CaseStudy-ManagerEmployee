@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@javax.servlet.annotation.WebFilter("/admin-page/*")
+//@javax.servlet.annotation.WebFilter("/admin-page/*")
 public class AdminFilter implements Filter {
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
