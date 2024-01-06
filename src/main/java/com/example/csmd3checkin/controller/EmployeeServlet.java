@@ -1,7 +1,11 @@
 package com.example.csmd3checkin.controller;
 
+import com.example.csmd3checkin.dao.Impl.ProjectDAO;
+import com.example.csmd3checkin.dao.Impl.TeamDAO;
 import com.example.csmd3checkin.dao.Impl.TimeKeepingDAO;
 import com.example.csmd3checkin.model.Member;
+import com.example.csmd3checkin.model.Project;
+import com.example.csmd3checkin.model.Team;
 import com.example.csmd3checkin.model.TimeKeeping;
 
 import javax.servlet.ServletException;
@@ -17,12 +21,30 @@ import java.util.List;
 @WebServlet(name= "employeeServlets", value = "/employee-page")
 public class EmployeeServlet extends HttpServlet {
     private TimeKeepingDAO timeKeepingDAO;
+    private TeamDAO teamDAO;
+    private ProjectDAO projectDAO;
     public void init(){
         timeKeepingDAO = new TimeKeepingDAO();
+        teamDAO = new TeamDAO();
+        projectDAO=new ProjectDAO();
     }
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        showEmployeePage(req, resp);
+        String action = req.getParameter("act");
+        if (action == null) {
+            action = "";
+        }
+
+        switch (action) {
+            case "show-profile":
+                showProfile(req,resp);
+                break;
+
+            default:
+                showEmployeePage(req, resp);
+                break;
+        }
+
     }
 
     private void showEmployeePage(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -39,6 +61,28 @@ public class EmployeeServlet extends HttpServlet {
         req.setAttribute("member", member);
 
         req.getRequestDispatcher("jsp/pagesIndex/indexEmployee.jsp").forward(req, resp);
+    }
+    private void showProfile(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        HttpSession session = req.getSession();
+        Member member = (Member) session.getAttribute("member");
+
+        List<Team> listTeam = teamDAO.selectTeamProject();
+        req.setAttribute("listTeam", listTeam);
+        List<Project> projectIdName = projectDAO.selectProjectIdName();
+        req.setAttribute("projectIdName", projectIdName);
+
+
+        TimeKeeping timeKeeping = timeKeepingDAO.selectTimeKeeping(member, LocalDateTime.now());
+
+        String wordBoxCheck = timeKeeping.isStatus() ? "Check out" : "Check in";
+        session.setAttribute("word", wordBoxCheck);
+
+        req.setAttribute("member", member);
+
+
+        req.getRequestDispatcher("jsp/menuEmployee/show-profile.jsp").forward(req, resp);
+
+
     }
 
     @Override
