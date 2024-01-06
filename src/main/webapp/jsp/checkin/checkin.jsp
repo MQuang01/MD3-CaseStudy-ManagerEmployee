@@ -82,14 +82,11 @@
             }
         }
 
-        #camera {
-            display: flex;
-            flex-flow: column wrap;
-        }
     </style>
 </head>
 
 <body>
+
 <div class="btn-back">
     <button class="btn btn-intermediate">
         <a href="${linkBack}" style="text-decoration: none">Back</a>
@@ -99,11 +96,15 @@
 <div class="loading-container" id="loadingContainer">
     <div class="spinner"></div>
 </div>
-<div class="container">
+
+
+<div class="container" id="container">
     <div id="camera"></div>
-    <button class="button-29" role="button" onclick="snapShot()">Click here</button>
+    <button class="button-29" role="button" onclick="snapShotCheckin()">Check-in Here</button>
+    <button class="button-29" role="button" onclick="snapShotCheckout()">Check-out Here</button>
     <div id="formCaptured"></div>
 </div>
+
 </body>
 <script
         src="https://cdn.jsdelivr.net/npm/face-api.js@0.22.2/dist/face-api.js"

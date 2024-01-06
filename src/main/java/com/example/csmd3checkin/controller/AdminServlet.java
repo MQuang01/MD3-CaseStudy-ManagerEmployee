@@ -58,7 +58,6 @@ public class AdminServlet extends HttpServlet {
             case "delete-member":
                 deleteMember(req, resp);
                 break;
-
             default:
                 showAdminPage(req, resp);
                 break;
@@ -68,7 +67,7 @@ public class AdminServlet extends HttpServlet {
 
     private void showAddTaskForm(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
-        Member member = (Member) session.getAttribute("account");
+        Member member = (Member) session.getAttribute("member");
         req.setAttribute("member", member);
 
         req.getRequestDispatcher("jsp/menuAdmin/add-task.jsp").forward(req, resp);
@@ -76,12 +75,19 @@ public class AdminServlet extends HttpServlet {
 
     private void showProfile(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
-        Member member = (Member) session.getAttribute("account");
+        Member member = (Member) session.getAttribute("member");
+
 
         List<Team> listTeam = teamDAO.selectTeamProject();
         req.setAttribute("listTeam", listTeam);
         List<Project> projectIdName = projectDAO.selectProjectIdName();
         req.setAttribute("projectIdName", projectIdName);
+
+
+        TimeKeeping timeKeeping = timeKeepingDAO.selectTimeKeeping(member, LocalDateTime.now());
+
+        String wordBoxCheck = timeKeeping.isStatus() ? "Check out" : "Check in";
+        session.setAttribute("word", wordBoxCheck);
 
         req.setAttribute("member", member);
 
@@ -106,14 +112,9 @@ public class AdminServlet extends HttpServlet {
 
     private void showAddMemberForm(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-//        HttpSession session = request.getSession();
-//        Member member = (Member) session.getAttribute("account");
-//        request.setAttribute("member", member);
 
-        int newAccountId = accountDAO.checkNewAccountId();
-        System.out.println("newAccountId: " + newAccountId);
-        request.setAttribute("newAccountId", newAccountId);
-//        request.setAttribute("newAccountId", request.getParameter("currentId"));
+
+
         List<Team> teamList = teamDAO.selectAllTeam();
         request.setAttribute("teamList", teamList);
 
@@ -183,20 +184,20 @@ public class AdminServlet extends HttpServlet {
     private void insertMember(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, IOException, ServletException {
 
-        Member newMember = new Member(
+        int newAccountId = accountDAO.checkNewAccountId();
 
+        Member newMember = new Member(
                 request.getParameter("name"),
                 request.getParameter("phone"),
                 LocalDate.parse(request.getParameter("dob"), DateTimeFormatter.ofPattern("yyyy-MM-dd")),
                 request.getParameter("email"),
                 Integer.parseInt(request.getParameter("teamId")),
-                Integer.parseInt(request.getParameter("accountId"))
+                newAccountId
 
         );
         memberDAO.insertMember(newMember);
 
-//        RequestDispatcher dispatcher = request.getRequestDispatcher("jsp/menuAdmin/add-member.jsp");
-//        dispatcher.forward(request, response);
+
         response.sendRedirect("/admin-page");
     }
 
@@ -205,18 +206,15 @@ public class AdminServlet extends HttpServlet {
         Account newAccount = new Account(
                 request.getParameter("username"),
                 request.getParameter("password"),
-                ERole.findByName(request.getParameter("role"))
+                ERole.findByName(request.getParameter("role")) //admin | employee
         );
+
         accountDAO.insertAccount(newAccount);
 
 
-//        request.setAttribute("currentId",newAccountId);
-//        response.sendRedirect("/admin-page?act=add-member?currentId="+newAccountId);
         response.sendRedirect("/admin-page?act=add-member");
 
 
-//        RequestDispatcher dispatcher = request.getRequestDispatcher("jsp/menuAdmin/add-account.jsp");
-//        dispatcher.forward(request, response);
 
     }
 }

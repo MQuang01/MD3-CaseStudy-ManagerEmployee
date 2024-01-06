@@ -3,6 +3,8 @@ const formCaptured = document.querySelector("#formCaptured");
 
 async function loadTrainingData() {
 
+
+    const faceDescriptors = [];
     const descriptors = [];
     for (let i = 1; i <= 4; i++) {
         const image = await faceapi.fetchImage(`/data/${label}/${i}.jpeg`);
