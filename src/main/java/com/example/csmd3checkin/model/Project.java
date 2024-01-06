@@ -12,6 +12,11 @@ public class Project {
     public Project() {
     }
 
+    public Project(int id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
     public Project(int id, String name, LocalDate deadLine, boolean status, int teamId) {
         this.id = id;
         this.name = name;

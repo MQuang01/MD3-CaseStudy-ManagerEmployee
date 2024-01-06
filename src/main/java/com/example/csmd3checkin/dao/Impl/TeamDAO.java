@@ -12,6 +12,7 @@ import java.util.List;
 
 public class TeamDAO extends DBConnect implements ITeamDAO {
     private static final String SELECT_ALL_TEAM="select id,name from teams";
+    private static final String SELECT_TEAM_project="select * from teams";
     @Override
     public List<Team> selectAllTeam() {
         List<Team> team=new ArrayList<>();
@@ -26,6 +27,30 @@ public class TeamDAO extends DBConnect implements ITeamDAO {
                 team.add(new Team(
                         rs.getInt("id"),
                         rs.getString("name")
+                ));
+
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return team;
+    }
+
+    @Override
+    public List<Team> selectTeamProject() {
+        List<Team> team=new ArrayList<>();
+        try {
+            Connection connection=getConnection();
+            PreparedStatement preparedStatement= connection.prepareStatement(SELECT_TEAM_project);
+            System.out.println(preparedStatement);
+            ResultSet rs=preparedStatement.executeQuery();
+
+            while (rs.next()){
+
+                team.add(new Team(
+                        rs.getInt("id"),
+                        rs.getString("name"),
+                        rs.getInt("project_id")
                 ));
 
             }

@@ -7,6 +7,8 @@ import com.example.csmd3checkin.model.Member;
 import com.example.csmd3checkin.model.enumration.ERole;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class AccountDAO extends DBConnect implements IAccountDAO {
     private static final String SELECT_ACCOUNT = "SELECT * FROM accounts WHERE username = ? AND password = ?";
@@ -14,7 +16,7 @@ public class AccountDAO extends DBConnect implements IAccountDAO {
 
     private static final String TAKE_NEW_ACCOUNT_ID="SELECT id FROM accounts ORDER BY id DESC LIMIT 1";
     private static final String FIND_ID_ACCOUNT="";
-
+    private static final String SELECT_ALL_ACCOUNT = "SELECT * FROM accounts";
 
     @Override
     public Account checkLoginCorrect(Account account) {
@@ -57,6 +59,34 @@ public class AccountDAO extends DBConnect implements IAccountDAO {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    public List<Account> selectAllAccount() {
+        List<Account> accounts=new ArrayList<>();
+
+        try {
+            Connection connection= getConnection();
+            PreparedStatement preparedStatement= connection.prepareStatement(SELECT_ALL_ACCOUNT);
+            System.out.println(preparedStatement);
+            ResultSet rs=preparedStatement.executeQuery();
+
+            while (rs.next()){
+
+                accounts.add(new Account(
+                        rs.getInt("id"),
+                        rs.getString("username"),
+                        rs.getString("password"),
+                        ERole.findByName(rs.getString("role"))
+                ));
+            }
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
+        }
+
+        return accounts;
     }
 
     @Override
