@@ -55,10 +55,10 @@ public class AdminServlet extends HttpServlet {
             case "show-profile":
                 showProfile(req,resp);
                 break;
-            case "show-check":
+            case "show-myCheck":
                 showCheck(req,resp);
                 break;
-            case "show-check-all":
+            case "show-allCheck":
                 showCheckAll(req,resp);
                 break;
             case "delete-member":

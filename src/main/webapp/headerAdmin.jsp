@@ -217,16 +217,16 @@
                 </li>
 
             </ul>
-            <ul>
+            <ul class="mt-6">
 
                 <li class="relative px-6 py-3">
                     <span
-                            class="absolute inset-y-0 left-0 w-1 bg-purple-600 rounded-tr-lg rounded-br-lg item" id="show-check"
+                            class="absolute inset-y-0 left-0 w-1 bg-purple-600 rounded-tr-lg rounded-br-lg item" id="show-myCheck"
                             aria-hidden="true"
                     ></span>
                     <a
                             class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
-                            href="/admin-page?act=show-check"
+                            href="/admin-page?act=show-myCheck"
                     >
                         <svg
                                 class="w-5 h-5"
@@ -242,21 +242,21 @@
                                     d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"
                             ></path>
                         </svg>
-                        <span class="ml-4">Check time</span>
+                        <span class="ml-4">My CheckTime</span>
                     </a>
                 </li>
 
             </ul>
-            <ul>
+            <ul class="mt-6">
 
                 <li class="relative px-6 py-3">
                     <span
-                            class="absolute inset-y-0 left-0 w-1 bg-purple-600 rounded-tr-lg rounded-br-lg item" id="show-check-all"
+                            class="absolute inset-y-0 left-0 w-1 bg-purple-600 rounded-tr-lg rounded-br-lg item" id="show-allCheck"
                             aria-hidden="true"
                     ></span>
                     <a
                             class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
-                            href="/admin-page?act=show-check-all"
+                            href="/admin-page?act=show-allCheck"
                     >
                         <svg
                                 class="w-5 h-5"
@@ -272,7 +272,7 @@
                                     d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"
                             ></path>
                         </svg>
-                        <span class="ml-4">Check time all</span>
+                        <span class="ml-4">Time Keepings</span>
                     </a>
                 </li>
 

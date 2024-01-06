@@ -18,10 +18,6 @@ public class TimeKeepingFilter implements Filter {
             ((HttpServletResponse)response).sendRedirect("/auths");
             return;
         }
-        if(!((Account) session.getAttribute("account")).getRole().equals(ERole.ADMIN)){
-            ((HttpServletResponse)response).sendRedirect("/auths?action=confirmLogin");
-            return;
-        }
         chain.doFilter(request, response);
     }
 }
