@@ -21,7 +21,7 @@ import java.util.List;
 
 import static com.example.csmd3checkin.dao.Util.checkLateOnTimeAbsent;
 
-@WebServlet(name="manager-empl", value = "/timekeeping")
+@WebServlet(name="timeKeepingServlets", value = "/timekeeping")
 public class TimeKeepingServlet extends HttpServlet {
     private TimeKeepingDAO timeKeepingDAO;
     public void init() {
@@ -49,7 +49,7 @@ public class TimeKeepingServlet extends HttpServlet {
 
     private void checkInDB(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         HttpSession session = req.getSession();
-        Member member = (Member) session.getAttribute("account");
+        Member member = (Member) session.getAttribute("member");
 
         if(timeKeepingDAO.updateTimeCheckin(member)){
             if (member.getAccount().getRole().equals(ERole.ADMIN)){
@@ -64,7 +64,7 @@ public class TimeKeepingServlet extends HttpServlet {
     }
     private void checkOutDB(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         HttpSession session = req.getSession();
-        Member member = (Member) session.getAttribute("account");
+        Member member = (Member) session.getAttribute("member");
 
         if(timeKeepingDAO.updateTimeCheckout(member)){
             if (member.getAccount().getRole().equals(ERole.ADMIN)){
@@ -78,10 +78,11 @@ public class TimeKeepingServlet extends HttpServlet {
         }
     }
     private void showCheckinForm(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
-
         HttpSession session = req.getSession();
-        Member member = (Member) session.getAttribute("account");
+        Member member = (Member) session.getAttribute("member");
 
+        String hrefBack = member.getAccount().getRole().equals(ERole.ADMIN) ? "/admin-page" : "/employee-page";
+        req.setAttribute("linkBack", hrefBack);
         req.setAttribute("memberJs", new ObjectMapper().writeValueAsString(member.getFullName()));
 
         req.getRequestDispatcher("/jsp/checkin/checkin.jsp").forward(req, resp);
@@ -90,8 +91,6 @@ public class TimeKeepingServlet extends HttpServlet {
 
 
     private void showTimeKeeping(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-
         request.getRequestDispatcher("jsp/pagesIndex/indexAdmin.jsp").forward(request, response);
 
     }

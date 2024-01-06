@@ -10,6 +10,7 @@ import com.example.csmd3checkin.model.Account;
 import com.example.csmd3checkin.model.Member;
 import com.example.csmd3checkin.model.TimeKeeping;
 import com.example.csmd3checkin.model.enumration.ERole;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -21,7 +22,7 @@ import java.io.IOException;
 import java.time.LocalTime;
 import java.util.Arrays;
 import java.util.List;
-
+import java.util.Objects;
 
 
 @WebServlet(name = "auths", value = "/auths")
@@ -53,7 +54,11 @@ public class AuthServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        checkLogin(req, resp);
+        String action = req.getParameter("act");
+        if(Objects.equals(action, "confirmLogin")){
+            checkLogin(req, resp);
+        }
+//        checkLogin(req, resp);
     }
 
     private void checkLogin(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
@@ -62,24 +67,24 @@ public class AuthServlet extends HttpServlet {
         HttpSession session = req.getSession();
 
         if(account != null){
+            session.setAttribute("account", account);
             Member member = memberDAO.selectMemberById(account.getId(), account);
 
             if(account.getRole().equals(ERole.ADMIN)){
 
-                session.setAttribute("account", member);
+                session.setAttribute("member", member);
 
                 resp.sendRedirect("/admin-page");
             } else {
 
-                session.setAttribute("account", member);
+                session.setAttribute("member", member);
 
                 resp.sendRedirect("/employee-page");
             }
 
         }else {
-            req.setAttribute("message", "Login Failed!");
+            req.setAttribute("message", "Login Failed !");
             req.getRequestDispatcher("jsp/login/login.jsp").forward(req, resp);
-
         }
     }
 

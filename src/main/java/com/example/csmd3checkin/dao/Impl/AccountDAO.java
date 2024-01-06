@@ -43,13 +43,12 @@ public class AccountDAO extends DBConnect implements IAccountDAO {
 
     @Override
     public void insertAccount(Account account) {
-        System.out.println(INSERT_ACCOUNT);
         try (Connection connection=getConnection();
              PreparedStatement preparedStatement= connection.prepareStatement(INSERT_ACCOUNT)){
 
             preparedStatement.setString(1,account.getUsername());
             preparedStatement.setString(2,account.getPassword());
-            preparedStatement.setString(3,String.valueOf(ERole.EMPLOYEE));
+            preparedStatement.setString(3, String.valueOf(account.getRole()));
 
 
             System.out.println(preparedStatement);

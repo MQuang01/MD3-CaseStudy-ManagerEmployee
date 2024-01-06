@@ -24,6 +24,7 @@
             type="text/css"
             href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css"
     />
+
     <style>
         .bg-img {
             background-image: url("../../image/backgr.jpg");
@@ -43,7 +44,7 @@
 </head>
 <body>
 
-<form action="/auths" method="post">
+<form action="/auths?act=confirmLogin" method="post">
     <!-- Section: Design Block -->
     <section class="text-center text-lg-start bg-img">
         <!-- Jumbotron -->
@@ -92,9 +93,8 @@
 </form>
 
 </body>
-    <script>
-        Toastify({
-            text: ${message},
-        }).showToast();
-    </script>
+<script
+        type="text/javascript"
+        src="https://cdn.jsdelivr.net/npm/toastify-js"
+></script>
 </html>
