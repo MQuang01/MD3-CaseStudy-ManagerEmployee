@@ -55,6 +55,12 @@ public class AdminServlet extends HttpServlet {
             case "show-profile":
                 showProfile(req,resp);
                 break;
+            case "show-check":
+                showCheck(req,resp);
+                break;
+            case "show-check-all":
+                showCheckAll(req,resp);
+                break;
             case "delete-member":
                 deleteMember(req, resp);
                 break;
@@ -77,7 +83,7 @@ public class AdminServlet extends HttpServlet {
         HttpSession session = req.getSession();
         Member member = (Member) session.getAttribute("member");
 
-
+// tiếp tục đi
         List<Team> listTeam = teamDAO.selectTeamProject();
         req.setAttribute("listTeam", listTeam);
         List<Project> projectIdName = projectDAO.selectProjectIdName();
@@ -96,8 +102,36 @@ public class AdminServlet extends HttpServlet {
 
 
     }
+    private void showCheck(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-    private void showAddAccountForm(HttpServletRequest request, HttpServletResponse response)
+        HttpSession session = req.getSession();
+        Member member = (Member) session.getAttribute("member");
+
+        TimeKeeping timeKeeping = timeKeepingDAO.selectTimeKeeping(member, LocalDateTime.now());
+
+        List<TimeKeeping> timeKeepingList = timeKeepingDAO.selectTimeKeepingOf(member);
+
+        String wordBoxCheck = timeKeeping.isStatus() ? "Check out" : "Check in";
+        session.setAttribute("word", wordBoxCheck);
+        req.setAttribute("listCheckin", timeKeepingList);
+        req.setAttribute("member", member);
+
+        req.getRequestDispatcher("jsp/menuAdmin/show-check.jsp").forward(req, resp);
+
+    }
+
+    private void showCheckAll(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+        List<Member> listMember = memberDAO.selectAllMember();
+        req.setAttribute("listMember", listMember);
+
+        List<TimeKeeping> listTimeKeeping = timeKeepingDAO.selectAllTimeKeeping();
+        req.setAttribute("listCheckin", listTimeKeeping);
+
+        req.getRequestDispatcher("jsp/menuAdmin/show-check-all.jsp").forward(req, resp);
+
+    }
+        private void showAddAccountForm(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 //        HttpSession session = request.getSession();
 //        Member member = (Member) session.getAttribute("account");
@@ -136,7 +170,7 @@ public class AdminServlet extends HttpServlet {
         List<Member> listMember = memberDAO.selectAllMember();
         req.setAttribute("listMember", listMember);
         List<Account> listAccount = accountDAO.selectAllAccount();
-        req.setAttribute("listAccount", listAccount);
+        req.setAttribute("listAccount", listAccount);  // 2 cái này để làm gì?
         List<Team> listTeam = teamDAO.selectTeamProject();
         req.setAttribute("listTeam", listTeam);
         List<Project> projectIdName = projectDAO.selectProjectIdName();

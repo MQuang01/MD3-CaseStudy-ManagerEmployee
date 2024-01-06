@@ -13,6 +13,8 @@ public interface ITimeKeepingDAO {
     TimeKeeping selectTimeKeeping(Member member, LocalDateTime day);
 
     List<TimeKeeping> selectTimeKeepingOf(Member member);
+    List<TimeKeeping> selectAllTimeKeeping();
+
 
     boolean deleteTimeKeeping(int id);
 
