@@ -68,7 +68,7 @@ public class MemberDAO extends DBConnect implements IMemberDAO {
                         rs.getDate("dob").toLocalDate(),
                         rs.getString("email"),
                         rs.getInt("teamId"),
-                        rs.getInt("accountId")
+                        rs.getInt("accounts_Id")
                 ));
             }
 
