@@ -80,9 +80,7 @@
     <p class="text-sm text-gray-600 dark:text-gray-400">
         <c:forEach var="listTeam" items="${listTeam}">
             <c:forEach var="projectIdName" items="${projectIdName}">
-                <c:if test="${member.teamId == listTeam.id and listTeam.projectId == projectIdName.id}">
-                    ${projectIdName.name}
-                </c:if>
+
             </c:forEach>
         </c:forEach>
     </p>

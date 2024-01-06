@@ -19,7 +19,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <c:import url="../../headerAdmin.jsp" />
 
-    <title>Title</title>
+<title>Title</title>
 
 <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">Add - account </h2>
 

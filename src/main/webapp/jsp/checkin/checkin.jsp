@@ -92,7 +92,12 @@
         <a href="${linkBack}" style="text-decoration: none">Back</a>
     </button>
 </div>
-<h3>Check in</h3>
+<h3>
+    <%
+        String word = (String) session.getAttribute("word");
+    %>
+    <%= word%>
+</h3>
 <div class="loading-container" id="loadingContainer">
     <div class="spinner"></div>
 </div>
@@ -100,8 +105,9 @@
 
 <div class="container" id="container">
     <div id="camera"></div>
-    <button class="button-29" role="button" onclick="snapShotCheckin()">Check-in Here</button>
-    <button class="button-29" role="button" onclick="snapShotCheckout()">Check-out Here</button>
+    <button class="button-29" role="button" onclick="snapShot()">
+        <%= word%> Here
+    </button>
     <div id="formCaptured"></div>
 </div>
 
@@ -121,7 +127,15 @@
         crossorigin="anonymous"
 ></script>
 <script>
-    const label = ${memberJs};
+    const label = ${memberJs}
+    const wordSession = "<%= word%>";
+    let wordReq= '';
+
+    if (wordSession === 'Check out') {
+        wordReq = 'checkout';
+    } else {
+        wordReq = 'checkin';
+    }
 </script>
 <script src="../../script.js"></script>
 

@@ -3,7 +3,6 @@ const formCaptured = document.querySelector("#formCaptured");
 
 async function loadTrainingData() {
 
-
     const faceDescriptors = [];
     const descriptors = [];
     for (let i = 1; i <= 4; i++) {
@@ -56,7 +55,7 @@ Webcam.set({
 });
 Webcam.attach("#camera");
 
-async function snapShotCheckin() {
+async function snapShot() {
     Webcam.snap(async function (data_uri) {
         formCaptured.innerHTML =
             '<img id="image" src="' + data_uri + '" height = 450 width = 450 />';
@@ -106,68 +105,11 @@ async function snapShotCheckin() {
 
             drawBox.draw(canvas);
             setTimeout(function () {
-                window.location.href = "/timekeeping?act=req-checkin"
+                window.location.href = "/timekeeping?act=req-" + wordReq
             }, 2000)
 
         }
     });
 }
 
-async function snapShotCheckout() {
-    Webcam.snap(async function (data_uri) {
-        formCaptured.innerHTML =
-            '<img id="image" src="' + data_uri + '" height = 450 width = 450 />';
-
-        const capturedImage = document.getElementById("image");
-
-        // Tạo một blob từ ảnh để sử dụng với faceapi.bufferToImage
-        capturedImage.crossOrigin = "Anonymous"; // Đảm bảo truy cập tới ảnh qua cors
-        const blob = await fetch(data_uri).then((response) => response.blob());
-
-        const image = await faceapi.bufferToImage(blob);
-        const canvas = faceapi.createCanvasFromMedia(image);
-        formCaptured.append(canvas);
-
-        const size = {
-            width: 480,
-            height: 360,
-        };
-
-        faceapi.matchDimensions(canvas, size);
-
-        const detections = await faceapi
-            .detectAllFaces(image)
-            .withFaceLandmarks()
-            .withFaceDescriptors();
-        const resizedDetections = faceapi.resizeResults(detections, size);
-
-
-        for (const detection of resizedDetections) {
-            const bestMatch = faceMatcher.findBestMatch(detection.descriptor);
-
-            if (bestMatch.label == 'unknown') {
-                Toastify({
-                    text: "Không thể nhận diện. Vui lòng thử lại !",
-                }).showToast();
-                return;
-            }
-
-            const label = `${bestMatch.label} (${Math.round(
-                bestMatch.distance * 100
-            )}%)`;
-
-
-            const drawBox = new faceapi.draw.DrawBox(detection.detection.box, {
-                label: label,
-            });
-
-            drawBox.draw(canvas);
-            setTimeout(function () {
-                window.location.href = "/timekeeping?act=req-checkout"
-            }, 2000)
-
-        }
-    });
-
-}
 

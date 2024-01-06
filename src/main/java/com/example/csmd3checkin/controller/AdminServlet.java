@@ -43,10 +43,10 @@ public class AdminServlet extends HttpServlet {
         }
 
         switch (action) {
-            case "add-task":
-                showAddTaskForm(req, resp);
+            case "manager-menu":
+                showCreatProjectForm(req, resp);
                 break;
-            case "add-account":
+            case "create":
                 showAddAccountForm(req, resp);
                 break;
             case "add-member":
@@ -71,20 +71,27 @@ public class AdminServlet extends HttpServlet {
 
     }
 
-    private void showAddTaskForm(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        HttpSession session = req.getSession();
-        Member member = (Member) session.getAttribute("member");
-        req.setAttribute("member", member);
+    private void showCreatProjectForm(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        List<Team> teams = teamDAO.selectAllTeam();
+        List<Team> teamOfEmpl = teamDAO.selectTeamGroupById();
+        List<Member> eListDefault = memberDAO.selectAllMemberType(ERole.EMPLOYEE);
 
-        req.getRequestDispatcher("jsp/menuAdmin/add-task.jsp").forward(req, resp);
+        List<Project> projects = projectDAO.selectAllProject();
+
+        req.setAttribute("listTeam", teams);
+        req.setAttribute("listTeamOption", teamOfEmpl);
+        req.setAttribute("listEmployee", eListDefault);
+        req.setAttribute("listProject", projects);
+
+        req.getRequestDispatcher("jsp/menuAdmin/create-project.jsp").forward(req, resp);
     }
 
     private void showProfile(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
         Member member = (Member) session.getAttribute("member");
 
-// tiếp tục đi
-        List<Team> listTeam = teamDAO.selectTeamProject();
+
+        List<Team> listTeam = teamDAO.selectAllTeam();
         req.setAttribute("listTeam", listTeam);
         List<Project> projectIdName = projectDAO.selectProjectIdName();
         req.setAttribute("projectIdName", projectIdName);
@@ -147,8 +154,6 @@ public class AdminServlet extends HttpServlet {
     private void showAddMemberForm(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-
-
         List<Team> teamList = teamDAO.selectAllTeam();
         request.setAttribute("teamList", teamList);
 
@@ -169,12 +174,16 @@ public class AdminServlet extends HttpServlet {
         //show member
         List<Member> listMember = memberDAO.selectAllMember();
         req.setAttribute("listMember", listMember);
+
         List<Account> listAccount = accountDAO.selectAllAccount();
-        req.setAttribute("listAccount", listAccount);  // 2 cái này để làm gì?
-        List<Team> listTeam = teamDAO.selectTeamProject();
+        req.setAttribute("listAccount", listAccount);
+        List<Team> listTeam = teamDAO.selectAllTeam();
+
+//        req.setAttribute("listAccount", listAccount);  // 2 cái này để làm gì?
+//        List<Team> listTeam = teamDAO.selectTeamProject();
         req.setAttribute("listTeam", listTeam);
-        List<Project> projectIdName = projectDAO.selectProjectIdName();
-        req.setAttribute("projectIdName", projectIdName);
+//        List<Project> projectIdName = projectDAO.selectProjectIdName();
+//        req.setAttribute("projectIdName", projectIdName);
 
         req.getRequestDispatcher("jsp/pagesIndex/indexAdmin.jsp").forward(req, resp);
 
@@ -203,6 +212,9 @@ public class AdminServlet extends HttpServlet {
         }
         try {
             switch (action) {
+                case "insert-project":
+                    insertProject(req, resp);
+                    break;
                 case "add-member":
                     insertMember(req, resp);
                     break;
@@ -213,6 +225,9 @@ public class AdminServlet extends HttpServlet {
         } catch (SQLException ex) {
             throw new ServletException(ex);
         }
+    }
+
+    private void insertProject(HttpServletRequest req, HttpServletResponse resp) {
     }
 
     private void insertMember(HttpServletRequest request, HttpServletResponse response)

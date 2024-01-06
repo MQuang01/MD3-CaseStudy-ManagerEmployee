@@ -6,6 +6,5 @@ import java.util.List;
 
 public interface ITeamDAO {
     List<Team> selectAllTeam();
-
-    List<Team> selectTeamProject();
+    List<Team> selectTeamGroupById();
 }
