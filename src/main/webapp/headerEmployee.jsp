@@ -91,8 +91,6 @@
                     %>
                     <%= word%>
                 </a>
-
-
             </button>
 
             <ul class="mt-6">

@@ -62,7 +62,6 @@ public class AdminServlet extends HttpServlet {
             case "delete-member":
                 deleteMember(req, resp);
                 break;
-
             default:
                 showAdminPage(req, resp);
                 break;
@@ -72,7 +71,7 @@ public class AdminServlet extends HttpServlet {
 
     private void showAddTaskForm(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
-        Member member = (Member) session.getAttribute("account");
+        Member member = (Member) session.getAttribute("member");
         req.setAttribute("member", member);
 
         req.getRequestDispatcher("jsp/menuAdmin/add-task.jsp").forward(req, resp);
@@ -80,13 +79,12 @@ public class AdminServlet extends HttpServlet {
 
     private void showAdminPage(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
-        Member member = (Member) session.getAttribute("account");
+        Member member = (Member) session.getAttribute("member");
 
         TimeKeeping timeKeeping = timeKeepingDAO.selectTimeKeeping(member, LocalDateTime.now());
 
         String wordBoxCheck = timeKeeping.isStatus() ? "Check out" : "Check in";
         session.setAttribute("word", wordBoxCheck);
-
         req.setAttribute("member", member);
 
 
