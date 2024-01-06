@@ -18,6 +18,7 @@ public class TimeKeepingDAO extends DBConnect implements ITimeKeepingDAO {
     private static final String SELECT_ALL_TIMEKEEPING_OF = "select * from time_keepings where (`memberId` = ?)";
     private static final String UPDATE_CHECK_IN_SQL = "UPDATE `time_keepings` SET `time_checkin` = ? , status = ? WHERE (`memberId` = ?) and (`day` like '%' ? '%')";
     private static final String UPDATE_CHECK_OUT_SQL = "UPDATE `time_keepings` SET `time_checkout` = ? WHERE (`memberId` = ?) and (`day` like '%' ? '%')";
+    private static final String SELECT_ALL_TIMEKEEPING = "select * from time_keepings";
 
     public TimeKeepingDAO() {
     }
@@ -113,6 +114,39 @@ public class TimeKeepingDAO extends DBConnect implements ITimeKeepingDAO {
                 boolean status = rs.getBoolean("status");
 
                 listTime.add(new TimeKeeping(id, date, timeCheckin, timeCheckout, status, member));
+            }
+        } catch (SQLException e) {
+            printSQLException(e);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return listTime;
+    }
+
+    @Override
+    public List<TimeKeeping> selectAllTimeKeeping() {
+        List<TimeKeeping> listTime = new ArrayList<>();
+        // Step 1: Establishing a Connection
+        try (PreparedStatement preparedStatement = getConnection().prepareStatement(SELECT_ALL_TIMEKEEPING)) {
+
+            ResultSet rs = preparedStatement.executeQuery();
+
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                LocalDate date = LocalDate.from(rs.getTimestamp("day").toLocalDateTime());
+                LocalTime timeCheckin = null;
+                if (rs.getTime("time_checkin") != null) {
+                    timeCheckin = rs.getTime("time_checkin").toLocalTime();
+                }
+
+                LocalTime timeCheckout = null;
+                if (rs.getTime("time_checkout") != null) {
+                    timeCheckout = rs.getTime("time_checkout").toLocalTime();
+                }
+                boolean status = rs.getBoolean("status");
+                int memberId=rs.getInt("memberId");
+
+                listTime.add(new TimeKeeping(id, date, timeCheckin, timeCheckout, status, memberId));
             }
         } catch (SQLException e) {
             printSQLException(e);
