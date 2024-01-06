@@ -97,6 +97,7 @@
     <div class="spinner"></div>
 </div>
 
+
 <div class="container" id="container">
     <div id="camera"></div>
     <button class="button-29" role="button" onclick="snapShotCheckin()">Check-in Here</button>

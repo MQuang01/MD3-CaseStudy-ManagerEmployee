@@ -1,14 +1,8 @@
 package com.example.csmd3checkin.controller;
 
-import com.example.csmd3checkin.dao.Impl.AccountDAO;
-import com.example.csmd3checkin.dao.Impl.MemberDAO;
-import com.example.csmd3checkin.dao.Impl.TeamDAO;
-import com.example.csmd3checkin.dao.Impl.TimeKeepingDAO;
-import com.example.csmd3checkin.model.Account;
-import com.example.csmd3checkin.model.Member;
-import com.example.csmd3checkin.model.Team;
+import com.example.csmd3checkin.dao.Impl.*;
+import com.example.csmd3checkin.model.*;
 import com.example.csmd3checkin.model.enumration.ERole;
-import com.example.csmd3checkin.model.TimeKeeping;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -32,12 +26,13 @@ public class AdminServlet extends HttpServlet {
     private AccountDAO accountDAO;
     private TimeKeepingDAO timeKeepingDAO;
     private TeamDAO teamDAO;
-
+    private ProjectDAO projectDAO;
     public void init() {
         memberDAO = new MemberDAO();
         accountDAO = new AccountDAO();
         timeKeepingDAO = new TimeKeepingDAO();
         teamDAO = new TeamDAO();
+        projectDAO=new ProjectDAO();
     }
 
     @Override
@@ -51,14 +46,15 @@ public class AdminServlet extends HttpServlet {
             case "add-task":
                 showAddTaskForm(req, resp);
                 break;
-
             case "add-account":
                 showAddAccountForm(req, resp);
                 break;
             case "add-member":
                 showAddMemberForm(req, resp);
                 break;
-
+            case "show-profile":
+                showProfile(req,resp);
+                break;
             case "delete-member":
                 deleteMember(req, resp);
                 break;
@@ -77,18 +73,28 @@ public class AdminServlet extends HttpServlet {
         req.getRequestDispatcher("jsp/menuAdmin/add-task.jsp").forward(req, resp);
     }
 
-    private void showAdminPage(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    private void showProfile(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
         Member member = (Member) session.getAttribute("member");
+
+
+        List<Team> listTeam = teamDAO.selectTeamProject();
+        req.setAttribute("listTeam", listTeam);
+        List<Project> projectIdName = projectDAO.selectProjectIdName();
+        req.setAttribute("projectIdName", projectIdName);
+
 
         TimeKeeping timeKeeping = timeKeepingDAO.selectTimeKeeping(member, LocalDateTime.now());
 
         String wordBoxCheck = timeKeeping.isStatus() ? "Check out" : "Check in";
         session.setAttribute("word", wordBoxCheck);
+
         req.setAttribute("member", member);
 
 
-        req.getRequestDispatcher("jsp/pagesIndex/indexAdmin.jsp").forward(req, resp);
+        req.getRequestDispatcher("jsp/menuAdmin/show-profile.jsp").forward(req, resp);
+
+
     }
 
     private void showAddAccountForm(HttpServletRequest request, HttpServletResponse response)
@@ -114,6 +120,33 @@ public class AdminServlet extends HttpServlet {
 
         request.getRequestDispatcher("jsp/menuAdmin/add-member.jsp").forward(request, response);
     }
+
+    private void showAdminPage(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        HttpSession session = req.getSession();
+        Member member = (Member) session.getAttribute("account");
+
+        TimeKeeping timeKeeping = timeKeepingDAO.selectTimeKeeping(member, LocalDateTime.now());
+
+        String wordBoxCheck = timeKeeping.isStatus() ? "Check out" : "Check in";
+        session.setAttribute("word", wordBoxCheck);
+
+        req.setAttribute("member", member);
+
+        //show member
+        List<Member> listMember = memberDAO.selectAllMember();
+        req.setAttribute("listMember", listMember);
+        List<Account> listAccount = accountDAO.selectAllAccount();
+        req.setAttribute("listAccount", listAccount);
+        List<Team> listTeam = teamDAO.selectTeamProject();
+        req.setAttribute("listTeam", listTeam);
+        List<Project> projectIdName = projectDAO.selectProjectIdName();
+        req.setAttribute("projectIdName", projectIdName);
+
+        req.getRequestDispatcher("jsp/pagesIndex/indexAdmin.jsp").forward(req, resp);
+
+
+    }
+
 
     private void deleteMember(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
