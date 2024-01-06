@@ -2,7 +2,7 @@ package com.example.csmd3checkin.dao;
 
 import com.example.csmd3checkin.model.Account;
 import com.example.csmd3checkin.model.Member;
-import com.example.csmd3checkin.model.TimeKeeping;
+import com.example.csmd3checkin.model.enumration.ERole;
 
 import java.util.List;
 
@@ -13,4 +13,5 @@ public interface IMemberDAO {
 
     boolean deleteMember(int id);
     boolean updateMember(Member member);
+    List<Member> selectAllMemberType(ERole role);
 }

@@ -9,6 +9,7 @@ public class Member {
     private LocalDate doB;
     private String email;
     private int teamId;
+    private Team team;
     private int accountId;
     private Account account;
 
@@ -43,6 +44,15 @@ public class Member {
         this.teamId = teamId;
         this.account = account;
         this.accountId = account.getId();
+    }
+    public Member(int id, String fullName, String phoneNum, LocalDate doB, String email, Team team) {
+        this.id = id;
+        this.fullName = fullName;
+        this.phoneNum = phoneNum;
+        this.doB = doB;
+        this.email = email;
+        this.team = team;
+        this.teamId = team.getId();
     }
 
     public int getId() {

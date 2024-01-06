@@ -8,6 +8,7 @@ public class Project {
     private LocalDate deadLine;
     private boolean status;
     private int teamId;
+    private Team team;
 
     public Project() {
     }
@@ -17,12 +18,19 @@ public class Project {
         this.name = name;
     }
 
-    public Project(int id, String name, LocalDate deadLine, boolean status, int teamId) {
+    public Project(int id, String name, LocalDate deadLine, boolean status) {
         this.id = id;
         this.name = name;
         this.deadLine = deadLine;
         this.status = status;
-        this.teamId = teamId;
+    }
+
+    public Team getTeam() {
+        return team;
+    }
+
+    public void setTeam(Team team) {
+        this.team = team;
     }
 
     public int getId() {

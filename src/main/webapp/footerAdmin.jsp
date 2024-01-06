@@ -21,13 +21,11 @@
                 uls[i].classList.remove("hidden");
             }
         }
-        console.log('toiw')
+
         if(!location.href.includes("act")){
-            console.log('ifs')
             document.getElementById("dashboard").classList.remove("hidden");
         }
     }
-
     handleActiveMenu();
 </script>
 </html>
