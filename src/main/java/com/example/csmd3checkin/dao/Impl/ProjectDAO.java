@@ -2,6 +2,7 @@ package com.example.csmd3checkin.dao.Impl;
 
 import com.example.csmd3checkin.context.DBConnect;
 import com.example.csmd3checkin.dao.IProjectDAO;
+import com.example.csmd3checkin.model.Member;
 import com.example.csmd3checkin.model.Project;
 import com.example.csmd3checkin.model.Team;
 
@@ -10,10 +11,18 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.example.csmd3checkin.dao.Impl.MemberDAO.SELECT_TEAM_BY_ID;
+
+
 public class ProjectDAO extends DBConnect implements IProjectDAO {
+    private static final String SELECT_MY_PROJECT = "select p.id, p.`name`, p.deadline, p.`status`, p.teamId from projects p " +
+            "inner join teams on teams.id = p.teamId " +
+            "inner join members on members.teamId = teams.id " +
+            "where (members.id = ?)";
     private static final String SELECT_PROJECT_idname="select id,name from projects";
     private static final String SELECT_ALL_PROJECT = "select * from projects";
     private static final String INSERT_PROJECT = "INSERT INTO `manager_employees`.`projects` (`name`, `deadline`, `teamId`) VALUES (? , ? , ?);";
+
 
     @Override
     public List<Project> selectProjectIdName() {
@@ -71,5 +80,46 @@ public class ProjectDAO extends DBConnect implements IProjectDAO {
             throw new RuntimeException(e);
         }
         return projects;
+    }
+
+    @Override
+    public List<Project> selectMyProject(Member member) {
+        List<Project> myProjects = new ArrayList<>();
+        try(PreparedStatement preparedStatement = getConnection().prepareStatement(SELECT_MY_PROJECT)) {
+            preparedStatement.setInt(1, member.getId());
+
+            ResultSet rs = preparedStatement.executeQuery();
+            while (rs.next()){
+                int id = rs.getInt("id");
+                String name = rs.getString("name");
+                LocalDate deadline = rs.getDate("deadline").toLocalDate();
+                boolean status = rs.getBoolean("status");
+                int teamId = rs.getInt("teamId");
+                Team team = selectTeamById(teamId);
+
+                myProjects.add(new Project(id , name, deadline, status, team));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return myProjects;
+    }
+
+    private Team selectTeamById(int teamId) {
+        try(PreparedStatement preparedStatement = getConnection().prepareStatement(SELECT_TEAM_BY_ID)) {
+            preparedStatement.setInt(1, teamId);
+
+            ResultSet rs = preparedStatement.executeQuery();
+            if(rs.next()){
+                return new Team(rs.getInt("id"), rs.getString("name"));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return null;
     }
 }

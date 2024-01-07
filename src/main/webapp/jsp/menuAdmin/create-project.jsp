@@ -14,12 +14,12 @@
         <p>${errorMess}</p>
     </div>
 </c:if>
-<div style="text-align: center">
-    <h1 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">CREAT PROJECT</h1>
+<div class="text-center">
+    <h4 class="mt-2 mb-2 text-2xl font-semibold text-gray-700 dark:text-gray-200">CREAT PROJECT</h4>
 </div>
 
 <form action="/admin-page?act=insert-project" method="post">
-    <div class="px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800">
+    <div class="mb-2 px-4 py-3 bg-white rounded-lg shadow-md dark:bg-gray-800">
         <label class="block text-sm">
             <span class="text-gray-700 dark:text-gray-400">Project</span>
             <input name="projectName"
@@ -117,10 +117,12 @@
 
     </div>
 
+    <div style="text-align: center">
+        <button class="px-5 py-3 font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
+            Submit
+        </button>
+    </div>
 
-    <button class="px-5 py-3 font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
-        Submit
-    </button>
 </form>
 <c:import url="../../footerAdmin.jsp"/>
 <script>

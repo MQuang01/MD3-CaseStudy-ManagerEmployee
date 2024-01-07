@@ -1,5 +1,6 @@
 package com.example.csmd3checkin.dao;
 
+import com.example.csmd3checkin.model.Member;
 import com.example.csmd3checkin.model.Project;
 
 import java.util.List;
@@ -9,4 +10,6 @@ public interface IProjectDAO {
     void insertProject(Project project);
 
     List<Project> selectAllProject();
+
+    List<Project> selectMyProject(Member member);
 }

@@ -11,7 +11,9 @@ public interface IMemberDAO {
     List<Member> selectAllMember();
     void insertMember(Member member);
 
-    boolean deleteMember(int id);
+    void deleteMember(int id);
     boolean updateMember(Member member);
     List<Member> selectAllMemberType(ERole role);
+
+    List<Member> selectTeamMates(Member member);
 }
