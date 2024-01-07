@@ -9,7 +9,12 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <c:import url="../../headerAdmin.jsp"/>
-<div class="items-center">
+<c:if test="${not empty errorMess}">
+    <div class="error-message bg-red-600 text-center font-bold">
+        <p>${errorMess}</p>
+    </div>
+</c:if>
+<div style="text-align: center">
     <h1 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">CREAT PROJECT</h1>
 </div>
 
@@ -17,16 +22,22 @@
     <div class="px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800">
         <label class="block text-sm">
             <span class="text-gray-700 dark:text-gray-400">Project</span>
-            <input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input" placeholder="Enter Project Name" required>
+            <input name="projectName"
+                   class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                   placeholder="Enter Project Name" required>
         </label>
         <label class="block text-sm">
             <span class="text-gray-700 dark:text-gray-400">Deadline</span>
-            <input type="date" class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input" required>
+            <input type="date" name="deadline"
+                   class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                   required>
         </label>
         <label class="block text-sm">
             <span class="text-gray-700 dark:text-gray-400">Select Team</span>
             <select name="teamId"
-                    class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
+                    class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
+                    required
+            >
                 <option value="">Select team</option>
                 <c:forEach var="team" items="${listTeam}">
                     <option value="${team.id}">${team.name}</option>
@@ -39,6 +50,12 @@
                 </span>
             <div class="flex justify-between mt-2 mb-2">
                 <div>
+                    <label class="inline-flex items-center text-gray-600 dark:text-gray-400">
+                        <input type="radio"
+                               class="text-purple-600 form-radio focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
+                               name="optionShow" value="">
+                        <span class="ml-2">ALL</span>
+                    </label>
                     <c:forEach var="team" items="${listTeamOption}">
                         <label class="inline-flex items-center text-gray-600 dark:text-gray-400">
                             <input type="radio"
@@ -48,13 +65,12 @@
                         </label>
                     </c:forEach>
 
-
                 </div>
 
-                <button id="btn-showList"
-                        class="justify-end px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
+                <div id="btn-showList" onclick="handleShow()" style="cursor: pointer"
+                        class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
                     Show
-                </button>
+                </div>
 
             </div>
             <div class="w-full mb-8 overflow-hidden rounded-lg shadow-xs">
@@ -70,7 +86,7 @@
                     </tr>
                     </thead>
                     <tbody
-                            class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800"
+                            class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800" id="listDefault"
                     >
 
                     <c:forEach var="employee" items="${listEmployee}">
@@ -86,7 +102,7 @@
                                     ${employee.email}
                             </td>
                             <td class="px-4 py-3 text-xs">
-<%--                                    ${employee.team.getName()}--%>
+                                    ${employee.teamId}
                             </td>
                         </tr>
 
@@ -107,3 +123,29 @@
     </button>
 </form>
 <c:import url="../../footerAdmin.jsp"/>
+<script>
+    function handleShow() {
+        // document.getElementById("listDefault").classList.add("hidden")
+        const selectOption = document.querySelector("input[name='optionShow']:checked")
+        if(selectOption){
+            const vOption = selectOption.value;
+            if (vOption === ""){
+                const rows = document.querySelectorAll("#listDefault tr");
+                rows.forEach(row => {
+                    row.style.display = ""; // Hiển thị tất cả các hàng khi không có tùy chọn nào được chọn
+                });
+                return;
+            }
+            const rows = document.querySelectorAll("#listDefault tr");
+
+            rows.forEach(row => {
+                const teamId = row.querySelector("td:nth-child(4)").textContent.trim(); // Lấy giá trị teamId từ cell thứ 4 trong mỗi hàng
+                if (teamId !== vOption) {
+                    row.style.display = "none"; // Ẩn các hàng không phải của team có teamId = 1
+                }else {
+                    row.style.display = "";
+                }
+            });
+        }
+    }
+</script>

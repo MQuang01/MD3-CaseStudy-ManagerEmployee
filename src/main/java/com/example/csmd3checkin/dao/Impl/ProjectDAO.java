@@ -5,9 +5,7 @@ import com.example.csmd3checkin.dao.IProjectDAO;
 import com.example.csmd3checkin.model.Project;
 import com.example.csmd3checkin.model.Team;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +13,7 @@ import java.util.List;
 public class ProjectDAO extends DBConnect implements IProjectDAO {
     private static final String SELECT_PROJECT_idname="select id,name from projects";
     private static final String SELECT_ALL_PROJECT = "select * from projects";
+    private static final String INSERT_PROJECT = "INSERT INTO `manager_employees`.`projects` (`name`, `deadline`, `teamId`) VALUES (? , ? , ?);";
 
     @Override
     public List<Project> selectProjectIdName() {
@@ -37,6 +36,21 @@ public class ProjectDAO extends DBConnect implements IProjectDAO {
             throw new RuntimeException(e);
         }
         return project;
+    }
+
+    @Override
+    public void insertProject(Project project) {
+        try(PreparedStatement preparedStatement = getConnection().prepareStatement(INSERT_PROJECT)) {
+            preparedStatement.setString(1, project.getName());
+            preparedStatement.setDate(2, Date.valueOf(project.getDeadLine()));
+            preparedStatement.setInt(3, project.getTeamId());
+
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override

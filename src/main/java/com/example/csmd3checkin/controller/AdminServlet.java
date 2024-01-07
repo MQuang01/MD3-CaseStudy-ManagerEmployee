@@ -19,6 +19,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 @WebServlet(name = "adminServlets", value = "/admin-page")
 public class AdminServlet extends HttpServlet {
@@ -27,12 +28,13 @@ public class AdminServlet extends HttpServlet {
     private TimeKeepingDAO timeKeepingDAO;
     private TeamDAO teamDAO;
     private ProjectDAO projectDAO;
+
     public void init() {
         memberDAO = new MemberDAO();
         accountDAO = new AccountDAO();
         timeKeepingDAO = new TimeKeepingDAO();
         teamDAO = new TeamDAO();
-        projectDAO=new ProjectDAO();
+        projectDAO = new ProjectDAO();
     }
 
     @Override
@@ -53,13 +55,13 @@ public class AdminServlet extends HttpServlet {
                 showAddMemberForm(req, resp);
                 break;
             case "show-profile":
-                showProfile(req,resp);
+                showProfile(req, resp);
                 break;
             case "show-myCheck":
-                showCheck(req,resp);
+                showCheck(req, resp);
                 break;
             case "show-allCheck":
-                showCheckAll(req,resp);
+                showCheckAll(req, resp);
                 break;
             case "delete-member":
                 deleteMember(req, resp);
@@ -76,12 +78,10 @@ public class AdminServlet extends HttpServlet {
         List<Team> teamOfEmpl = teamDAO.selectTeamGroupById();
         List<Member> eListDefault = memberDAO.selectAllMemberType(ERole.EMPLOYEE);
 
-        List<Project> projects = projectDAO.selectAllProject();
 
         req.setAttribute("listTeam", teams);
         req.setAttribute("listTeamOption", teamOfEmpl);
         req.setAttribute("listEmployee", eListDefault);
-        req.setAttribute("listProject", projects);
 
         req.getRequestDispatcher("jsp/menuAdmin/create-project.jsp").forward(req, resp);
     }
@@ -109,6 +109,7 @@ public class AdminServlet extends HttpServlet {
 
 
     }
+
     private void showCheck(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         HttpSession session = req.getSession();
@@ -138,11 +139,10 @@ public class AdminServlet extends HttpServlet {
         req.getRequestDispatcher("jsp/menuAdmin/show-check-all.jsp").forward(req, resp);
 
     }
-        private void showAddAccountForm(HttpServletRequest request, HttpServletResponse response)
+
+    private void showAddAccountForm(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-//        HttpSession session = request.getSession();
-//        Member member = (Member) session.getAttribute("account");
-//        request.setAttribute("member", member);
+
 
         List<ERole> roleList = new ArrayList<>(Arrays.asList(ERole.values()));
         request.setAttribute("roleList", roleList);
@@ -227,8 +227,24 @@ public class AdminServlet extends HttpServlet {
         }
     }
 
-    private void insertProject(HttpServletRequest req, HttpServletResponse resp) {
+    private void insertProject(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        String name = req.getParameter("projectName");
+        LocalDate deadline = LocalDate.parse(req.getParameter("deadline"));
+
+        if (deadline.isBefore(LocalDate.now())){
+            HttpSession messageError = req.getSession();
+            messageError.setAttribute("errorMess", "The deadline cannot be in the past.");
+            resp.sendRedirect("/admin-page?act=manager-menu");
+            return;
+        }
+
+        int teamId = Integer.parseInt(req.getParameter("teamId"));
+
+
+        projectDAO.insertProject(new Project(name, deadline, teamId));
+        resp.sendRedirect("/admin-page");
     }
+
 
     private void insertMember(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, IOException, ServletException {
@@ -262,7 +278,6 @@ public class AdminServlet extends HttpServlet {
 
 
         response.sendRedirect("/admin-page?act=add-member");
-
 
 
     }

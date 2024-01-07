@@ -6,6 +6,7 @@ import java.util.List;
 
 public interface IProjectDAO {
     List<Project> selectProjectIdName();
+    void insertProject(Project project);
 
     List<Project> selectAllProject();
 }
