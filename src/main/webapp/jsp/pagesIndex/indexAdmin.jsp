@@ -91,11 +91,11 @@
                             <div>
                                 <p class="font-semibold"><c:out value="${listMember.fullName}"/></p>
                                 <p class="text-xs text-gray-600 dark:text-gray-400">
-                                    <c:forEach var="listAccount" items="${listAccount}">
-                                        <c:if test="${listMember.id == listAccount.id}">
-                                            ${listAccount.role}
-                                        </c:if>
-                                    </c:forEach>
+<%--                                    <c:forEach var="listAccount" items="${listAccount}">--%>
+<%--                                        <c:if test="${listMember.id == listAccount.id}">--%>
+<%--                                            ${listAccount.role}--%>
+<%--                                        </c:if>--%>
+<%--                                    </c:forEach>--%>
                                 </p>
                             </div>
                         </div>
