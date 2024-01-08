@@ -145,6 +145,7 @@ public class TimeKeepingDAO extends DBConnect implements ITimeKeepingDAO {
                 }
                 boolean status = rs.getBoolean("status");
                 int memberId=rs.getInt("memberId");
+//                Member member = selectMemberById(memberId);
 
                 listTime.add(new TimeKeeping(id, date, timeCheckin, timeCheckout, status, memberId));
             }
@@ -155,6 +156,10 @@ public class TimeKeepingDAO extends DBConnect implements ITimeKeepingDAO {
         }
         return listTime;
     }
+
+//    private Member selectMemberById(int memberId) {
+//
+//    }
 
     private void printSQLException(SQLException ex) {
         for (Throwable e : ex) {

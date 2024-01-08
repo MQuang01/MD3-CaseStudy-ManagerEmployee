@@ -250,7 +250,6 @@ public class AdminServlet extends HttpServlet {
         resp.sendRedirect("/admin-page");
     }
 
-
     private void insertMember(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, IOException, ServletException {
 
