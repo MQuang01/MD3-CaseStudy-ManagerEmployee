@@ -17,14 +17,16 @@ public class MemberDAO extends DBConnect implements IMemberDAO {
     private static final String SELECT_MEMBER = "select * from members " +
                                                     "inner join accounts on accounts.id = members.accounts_id " +
                                                         "where ( accounts.id = ? );";
-    private static final String SELECT_INFO_MEMBER_BY_ID="select members.id,accounts.`role`, members.`name`,members.phone,members.dob,members.email,teams.id as teamId,teams.`name` as teamName,  GROUP_CONCAT(projects.`name` SEPARATOR ', ') as projectsName from members\n" +
-            "join teams join accounts join projects \n" +
-            "on members.teamId=teams.id  and  projects.teamId=members.teamId  and accounts.id = members.accounts_id \n" +
-            "where ( members.id = ? )\n" +
+    private static final String SELECT_INFO_MEMBER_BY_ID="select members.id,accounts.`role`, members.`name`,members.phone,members.dob,members.email,teams.id as teamId,teams.`name` as teamName,  " +
+            "GROUP_CONCAT(projects.`name` SEPARATOR ', ') as projectsName from members " +
+            "join teams join accounts join projects " +
+            "on members.teamId=teams.id  and  projects.teamId=members.teamId  and accounts.id = members.accounts_id " +
+            "where ( members.id = ? ) " +
             "group by accounts.`role`, members.`name`,members.phone,members.dob,members.email,teams.id,teams.`name`;";
-    private static final String SELECT_MEMBERS_TEAMS="select accounts.`role`, members.`name`,members.phone,members.dob,members.email,teams.id,teams.`name` as teamName,  GROUP_CONCAT(projects.`name` SEPARATOR ', ') as projectsName from members\n" +
-            "join teams join accounts join projects\n" +
-            "on members.teamId=teams.id and members.id=accounts.id and  projects.teamId=members.teamId group by accounts.`role`, members.`name`,members.phone,members.dob,members.email,teams.id,teams.`name`;";
+    private static final String SELECT_MEMBERS_TEAMS="select * from members inner join accounts on accounts.id = members.accounts_id " +
+            "inner join teams on teams.id = members.teamId " +
+            "group by members.id, members.`name`;";
+
     private static final String SELECT_TEAMMATE = "select * from members where (teamId = ?);";
 
     private static final String SELECT_ALL_MEMBERS = "select * from members";
@@ -34,6 +36,10 @@ public class MemberDAO extends DBConnect implements IMemberDAO {
     private static final String UPDATE_MEMBER_SQL = "update members set name = ?,phone=?,dob=?,email= ?, country =?,teamId=?,accounts_Id=? where id = ?;";
     private static final String SELECT_ALL_MEMBER_TYPE = "select * from members inner join accounts on members.accounts_Id = accounts.id where ( role = ? )";
     public static final String SELECT_TEAM_BY_ID = "select * from teams where (id = ?)";
+    private static final String SELECT_ACCOUNT_BY_ID = "select * from accounts where (id = ?)";
+    private static final String SELECT_PROJECT_OF_TEAM = "select projects.`name` from projects " +
+            "inner join teams on teams.id = projects.teamId " +
+            "where teams.id = ?";
 
 
     public MemberDAO() {
@@ -46,8 +52,8 @@ public class MemberDAO extends DBConnect implements IMemberDAO {
             ResultSet rs = preparedStatement.executeQuery();
 
             if(rs.next()){
-                Team team=new Team(rs.getInt("id"),rs.getString("teamName"));
-                Project project=new Project(rs.getString("projectsName"));
+                Team team= selectTeamById(rs.getInt("teamId"));
+                List<Project> projects = selectProjectOfTeam(rs.getInt("teamId"));
 
                 int idMember = rs.getInt("id");
                 String nameMember = rs.getString("name");
@@ -56,7 +62,7 @@ public class MemberDAO extends DBConnect implements IMemberDAO {
                 String email = rs.getString("email");
                 int teamId = rs.getInt("teamId");
 
-                return new Member(idMember, nameMember, phoneMember, date, email, teamId,team,account,project);
+                return new Member(idMember, nameMember, phoneMember, date, email, teamId,team, account, projects);
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -82,34 +88,50 @@ public class MemberDAO extends DBConnect implements IMemberDAO {
 
                 return new Member(idMember, nameMember, phoneMember, date, email, teamId, account);
             }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
         return null;
     }
     public List<Member> selectMemberTeam() {
-        List<Member> member=new ArrayList<>();
+        List<Member> members = new ArrayList<>();
         try {
             Connection connection= getConnection();
             PreparedStatement preparedStatement= connection.prepareStatement(SELECT_MEMBERS_TEAMS);
             System.out.println(preparedStatement);
             ResultSet rs=preparedStatement.executeQuery();
 
+
+
             while (rs.next()){
-                Team team=new Team(rs.getInt("id"),rs.getString("teamName"));
-                Account account=new Account(ERole.findByName(rs.getString("role")));
-                Project project=new Project(rs.getString("projectsName"));
-                member.add(new Member(
-                        rs.getString("name"),
-                        rs.getString("phone"),
-                        rs.getDate("dob").toLocalDate(),
-                        rs.getString("email"),
+                Team team = selectTeamById(rs.getInt("teamId"));
+                Account account= selectAccountById(rs.getInt("accounts_id"));
+
+                members.add(new Member(
+                        rs.getString("members.name"),
+                        rs.getString("members.phone"),
+                        rs.getDate("members.dob").toLocalDate(),
+                        rs.getString("members.email"),
                         team,
-                        account,
-                        project
+                        account
                 ));
+            }
+
+//            List<Project> projects = selectProjectOfTeam();
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return members;
+    }
+
+    private List<Project> selectProjectOfTeam(int teamId) {
+        List<Project> projects = new ArrayList<>();
+        try(PreparedStatement preparedStatement = getConnection().prepareStatement(SELECT_PROJECT_OF_TEAM)) {
+            preparedStatement.setInt(1, teamId);
+            ResultSet rs = preparedStatement.executeQuery();
+            while (rs.next()){
+                projects.add(new Project(rs.getString("name")));
             }
 
         } catch (SQLException e) {
@@ -117,7 +139,22 @@ public class MemberDAO extends DBConnect implements IMemberDAO {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        return member;
+        return projects;
+    }
+
+    private Account selectAccountById(int accountsId) {
+        try(PreparedStatement preparedStatement = getConnection().prepareStatement(SELECT_ACCOUNT_BY_ID)) {
+            preparedStatement.setInt(1, accountsId);
+            ResultSet rs = preparedStatement.executeQuery();
+            if(rs.next()){
+                return new Account(ERole.findByName(rs.getString("role")));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return null;
     }
 
     @Override
@@ -227,8 +264,6 @@ public class MemberDAO extends DBConnect implements IMemberDAO {
 
                 memberList.add(new Member(id , name, phone, doB, mail, team));
             }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

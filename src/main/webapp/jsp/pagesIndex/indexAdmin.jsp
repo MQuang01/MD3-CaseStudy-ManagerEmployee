@@ -69,7 +69,7 @@
                     <th class="px-4 py-3">Date of Birth</th>
                     <th class="px-4 py-3">Email</th>
                     <th class="px-4 py-3">Team Name</th>
-                    <th class="px-4 py-3">Project Name</th>
+<%--                    <th class="px-4 py-3">Project Name</th>--%>
                 </tr>
                 </thead>
                 <tbody
@@ -119,10 +119,14 @@
                         <c:out value="${listMember.team.name}"/>
                     </td>
 
+<%--                    <td class="px-4 py-3 text-sm">--%>
+<%--&lt;%&ndash;                        <select class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">&ndash;%&gt;--%>
+<%--&lt;%&ndash;                            <c:forEach var="project" items="${listMember.projects}">&ndash;%&gt;--%>
+<%--&lt;%&ndash;                                <option>${project.name}</option>&ndash;%&gt;--%>
+<%--&lt;%&ndash;                            </c:forEach>&ndash;%&gt;--%>
+<%--&lt;%&ndash;                        </select>&ndash;%&gt;--%>
+<%--                    </td>--%>
 
-                    <td class="px-4 py-3 text-sm">
-                        <c:out value="${listMember.project.name}"/>
-                    </td>
 
                 </tr>
 

@@ -1,6 +1,7 @@
 package com.example.csmd3checkin.model;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public class Member {
     private int id;
@@ -12,11 +13,11 @@ public class Member {
     private Team team;
     private int accountId;
     private Account account;
-    private Project project;
+    private List<Project> projectList;
     public Member() {
     }
 
-    public Member(int id, String fullName, String phoneNum, LocalDate doB, String email, int teamId, Team team, Account account, Project project) {
+    public Member(int id, String fullName, String phoneNum, LocalDate doB, String email, int teamId, Team team, Account account, List<Project> projects) {
         this.id = id;
         this.fullName = fullName;
         this.phoneNum = phoneNum;
@@ -25,7 +26,7 @@ public class Member {
         this.teamId = teamId;
         this.team = team;
         this.account = account;
-        this.project = project;
+        this.projectList = projects;
     }
 
     public Member(String fullName, String phoneNum, LocalDate doB, String email, Team team, Account account) {
@@ -85,23 +86,24 @@ public class Member {
         this.teamId = team.getId();
     }
 
-    public Member(String fullName, String phoneNum, LocalDate doB, String email, Team team, Account account, Project project) {
+    public Member(String fullName, String phoneNum, LocalDate doB, String email, Team team, Account account, List<Project> projects) {
         this.fullName = fullName;
         this.phoneNum = phoneNum;
         this.doB = doB;
         this.email = email;
         this.team = team;
         this.account = account;
-        this.project = project;
+        this.projectList = projects;
     }
 
-    public Project getProject() {
-        return project;
+    public List<Project> getProjectList() {
+        return projectList;
     }
 
-    public void setProject(Project project) {
-        this.project = project;
+    public void setProject(List<Project> projects) {
+        this.projectList = projects;
     }
+
     public Member(int memberId, String name) {
         this.id = memberId;
         this.fullName = name;

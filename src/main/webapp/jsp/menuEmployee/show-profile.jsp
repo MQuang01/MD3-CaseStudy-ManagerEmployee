@@ -88,10 +88,11 @@
 
 <h4 class="mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300"> Project name</h4>
 <div class="px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800">
-    <p class="text-sm text-gray-600 dark:text-gray-400">
-        <c:out value="${member.project.name}"/>
-
-    </p>
+    <select class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
+        <c:forEach var="project" items="${projectList}">
+            <option>${project.name}</option>
+        </c:forEach>
+    </select>
 </div>
 
 
