@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ProjectDAO extends DBConnect implements IProjectDAO {
-    private static final String SELECT_PROJECT_idname="select id,name from projects";
+    private static final String SELECT_PROJECT_idname="select id,name,teamId from projects";
     private static final String SELECT_ALL_PROJECT = "select * from projects";
 
     @Override
@@ -29,7 +29,8 @@ public class ProjectDAO extends DBConnect implements IProjectDAO {
 
                 project.add(new Project(
                         rs.getInt("id"),
-                        rs.getString("name")
+                        rs.getString("name"),
+                        rs.getInt("teamId")
                 ));
 
             }

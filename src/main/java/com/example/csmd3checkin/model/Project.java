@@ -25,6 +25,12 @@ public class Project {
         this.status = status;
     }
 
+    public Project(int id, String name, int teamId) {
+        this.id = id;
+        this.name = name;
+        this.teamId = teamId;
+    }
+
     public Team getTeam() {
         return team;
     }
