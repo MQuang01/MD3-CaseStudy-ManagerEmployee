@@ -1,16 +1,13 @@
 /**
  * For usage, visit Chart.js docs https://www.chartjs.org/docs/latest/
  */
-// console.log(2);
-// const dataCheckIn=document.getElementById("dataCheckIn").value();
-// console.log(dataCheckIn);
 
 const pieConfig = {
   type: 'doughnut',
   data: {
     datasets: [
       {
-        data: [1,6,2],
+        data: [listTimeKeeping1,listTimeKeeping2,listTimeKeeping3],
         /**
          * These colors come from Tailwind CSS palette
          * https://tailwindcss.com/docs/customizing-colors/#default-color-palette

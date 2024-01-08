@@ -83,6 +83,9 @@ public class EmployeeServlet extends HttpServlet {
         HttpSession session = req.getSession();
         Member member = (Member) session.getAttribute("member");
 
+
+//        List<Team> listTeam = teamDAO.selectTeamProject();
+
         List<Team> listTeam = teamDAO.selectAllTeam();
         req.setAttribute("listTeam", listTeam);
         List<Project> projectIdName = projectDAO.selectProjectIdName();

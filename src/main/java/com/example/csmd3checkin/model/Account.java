@@ -29,6 +29,10 @@ public class Account {
         this.password = psw;
     }
 
+    public Account(ERole role) {
+        this.role = role;
+    }
+
     public int getId() {
         return id;
     }

@@ -16,6 +16,10 @@ public class MemberDAO extends DBConnect implements IMemberDAO {
     private static final String SELECT_MEMBER = "select * from members " +
                                                     "inner join accounts on accounts.id = members.accounts_id " +
                                                         "where ( accounts.id = ? );";
+
+    private static final String SELECT_MEMBERS_TEAMS="select accounts.`role`, members.`name`,members.phone,members.dob,members.email,teams.id,teams.`name` as teamname from members\n" +
+            "join teams join accounts\n" +
+            "on members.teamId=teams.id and members.id=accounts.id";
     private static final String SELECT_TEAMMATE = "select * from members where (teamId = ?);";
 
     private static final String SELECT_ALL_MEMBERS = "select * from members";
@@ -52,6 +56,34 @@ public class MemberDAO extends DBConnect implements IMemberDAO {
             throw new RuntimeException(e);
         }
         return null;
+    }
+    public List<Member> selectMemberTeam() {
+        List<Member> member=new ArrayList<>();
+        try {
+            Connection connection= getConnection();
+            PreparedStatement preparedStatement= connection.prepareStatement(SELECT_MEMBERS_TEAMS);
+            System.out.println(preparedStatement);
+            ResultSet rs=preparedStatement.executeQuery();
+
+            while (rs.next()){
+                Team team=new Team(rs.getInt("id"),rs.getString("teamname"));
+                Account account=new Account(ERole.findByName(rs.getString("role")));
+                member.add(new Member(
+                        rs.getString("name"),
+                        rs.getString("phone"),
+                        rs.getDate("dob").toLocalDate(),
+                        rs.getString("email"),
+                        team,
+                        account
+                ));
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return member;
     }
 
     @Override
