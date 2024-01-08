@@ -4,6 +4,7 @@ import com.example.csmd3checkin.context.DBConnect;
 import com.example.csmd3checkin.dao.IMemberDAO;
 import com.example.csmd3checkin.model.Account;
 import com.example.csmd3checkin.model.Member;
+import com.example.csmd3checkin.model.Project;
 import com.example.csmd3checkin.model.Team;
 import com.example.csmd3checkin.model.enumration.ERole;
 
@@ -16,10 +17,14 @@ public class MemberDAO extends DBConnect implements IMemberDAO {
     private static final String SELECT_MEMBER = "select * from members " +
                                                     "inner join accounts on accounts.id = members.accounts_id " +
                                                         "where ( accounts.id = ? );";
-
-    private static final String SELECT_MEMBERS_TEAMS="select accounts.`role`, members.`name`,members.phone,members.dob,members.email,teams.id,teams.`name` as teamname from members\n" +
-            "join teams join accounts\n" +
-            "on members.teamId=teams.id and members.id=accounts.id";
+    private static final String SELECT_INFO_MEMBER_BY_ID="select members.id,accounts.`role`, members.`name`,members.phone,members.dob,members.email,teams.id as teamId,teams.`name` as teamName,  GROUP_CONCAT(projects.`name` SEPARATOR ', ') as projectsName from members\n" +
+            "join teams join accounts join projects \n" +
+            "on members.teamId=teams.id  and  projects.teamId=members.teamId  and accounts.id = members.accounts_id \n" +
+            "where ( members.id = ? )\n" +
+            "group by accounts.`role`, members.`name`,members.phone,members.dob,members.email,teams.id,teams.`name`;";
+    private static final String SELECT_MEMBERS_TEAMS="select accounts.`role`, members.`name`,members.phone,members.dob,members.email,teams.id,teams.`name` as teamName,  GROUP_CONCAT(projects.`name` SEPARATOR ', ') as projectsName from members\n" +
+            "join teams join accounts join projects\n" +
+            "on members.teamId=teams.id and members.id=accounts.id and  projects.teamId=members.teamId group by accounts.`role`, members.`name`,members.phone,members.dob,members.email,teams.id,teams.`name`;";
     private static final String SELECT_TEAMMATE = "select * from members where (teamId = ?);";
 
     private static final String SELECT_ALL_MEMBERS = "select * from members";
@@ -32,6 +37,33 @@ public class MemberDAO extends DBConnect implements IMemberDAO {
 
 
     public MemberDAO() {
+    }
+
+    @Override
+    public Member selectInfoMemberById(int id, Account account) {
+        try(PreparedStatement preparedStatement = getConnection().prepareStatement(SELECT_INFO_MEMBER_BY_ID)) {
+            preparedStatement.setInt(1, id);
+            ResultSet rs = preparedStatement.executeQuery();
+
+            if(rs.next()){
+                Team team=new Team(rs.getInt("id"),rs.getString("teamName"));
+                Project project=new Project(rs.getString("projectsName"));
+
+                int idMember = rs.getInt("id");
+                String nameMember = rs.getString("name");
+                String phoneMember = rs.getString("phone");
+                LocalDate date = rs.getDate("dob").toLocalDate();
+                String email = rs.getString("email");
+                int teamId = rs.getInt("teamId");
+
+                return new Member(idMember, nameMember, phoneMember, date, email, teamId,team,account,project);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return null;
     }
 
     @Override
@@ -66,15 +98,17 @@ public class MemberDAO extends DBConnect implements IMemberDAO {
             ResultSet rs=preparedStatement.executeQuery();
 
             while (rs.next()){
-                Team team=new Team(rs.getInt("id"),rs.getString("teamname"));
+                Team team=new Team(rs.getInt("id"),rs.getString("teamName"));
                 Account account=new Account(ERole.findByName(rs.getString("role")));
+                Project project=new Project(rs.getString("projectsName"));
                 member.add(new Member(
                         rs.getString("name"),
                         rs.getString("phone"),
                         rs.getDate("dob").toLocalDate(),
                         rs.getString("email"),
                         team,
-                        account
+                        account,
+                        project
                 ));
             }
 

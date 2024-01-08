@@ -4,10 +4,7 @@ import com.example.csmd3checkin.dao.Impl.MemberDAO;
 import com.example.csmd3checkin.dao.Impl.ProjectDAO;
 import com.example.csmd3checkin.dao.Impl.TeamDAO;
 import com.example.csmd3checkin.dao.Impl.TimeKeepingDAO;
-import com.example.csmd3checkin.model.Member;
-import com.example.csmd3checkin.model.Project;
-import com.example.csmd3checkin.model.Team;
-import com.example.csmd3checkin.model.TimeKeeping;
+import com.example.csmd3checkin.model.*;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -83,25 +80,17 @@ public class EmployeeServlet extends HttpServlet {
         HttpSession session = req.getSession();
         Member member = (Member) session.getAttribute("member");
 
-
-//        List<Team> listTeam = teamDAO.selectTeamProject();
-
-        List<Team> listTeam = teamDAO.selectAllTeam();
-        req.setAttribute("listTeam", listTeam);
-        List<Project> projectIdName = projectDAO.selectProjectIdName();
-        req.setAttribute("projectIdName", projectIdName);
-
+        Member member1=memberDAO.selectInfoMemberById(member.getId(), new Account(member.getAccount().getRole()));
 
         TimeKeeping timeKeeping = timeKeepingDAO.selectTimeKeeping(member, LocalDateTime.now());
 
         String wordBoxCheck = timeKeeping.isStatus() ? "Check out" : "Check in";
         session.setAttribute("word", wordBoxCheck);
 
-        req.setAttribute("member", member);
+        req.setAttribute("member", member1);
 
 
         req.getRequestDispatcher("jsp/menuEmployee/show-profile.jsp").forward(req, resp);
-
 
     }
 

@@ -16,4 +16,6 @@ public interface IMemberDAO {
     List<Member> selectAllMemberType(ERole role);
 
     List<Member> selectTeamMates(Member member);
+    Member selectInfoMemberById(int id, Account account);
+
 }
