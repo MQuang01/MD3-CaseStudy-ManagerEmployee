@@ -88,7 +88,7 @@ public class EmployeeServlet extends HttpServlet {
         session.setAttribute("word", wordBoxCheck);
 
         req.setAttribute("member", member1);
-
+        req.setAttribute("projectList", member1.getProjectList());
 
         req.getRequestDispatcher("jsp/menuEmployee/show-profile.jsp").forward(req, resp);
 

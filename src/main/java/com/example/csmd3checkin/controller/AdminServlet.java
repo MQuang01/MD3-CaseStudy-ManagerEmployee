@@ -94,7 +94,7 @@ public class AdminServlet extends HttpServlet {
         Member member = (Member) session.getAttribute("member");
 
         // member.getAccount().getRole();
-        Member member1=memberDAO.selectInfoMemberById(member.getId(), new Account(member.getAccount().getRole()));
+        Member member1 = memberDAO.selectInfoMemberById(member.getId(), new Account(member.getAccount().getRole()));
 
         TimeKeeping timeKeeping = timeKeepingDAO.selectTimeKeeping(member, LocalDateTime.now());
 
@@ -102,7 +102,7 @@ public class AdminServlet extends HttpServlet {
         session.setAttribute("word", wordBoxCheck);
 
         req.setAttribute("member", member1);
-
+        req.setAttribute("projectList", member1.getProjectList());
 
         req.getRequestDispatcher("jsp/menuAdmin/show-profile.jsp").forward(req, resp);
 
@@ -183,7 +183,7 @@ public class AdminServlet extends HttpServlet {
 
         //show member
         List<Member> listMemberTeam = memberDAO.selectMemberTeam();
-        // infor, team, project => stream.
+        // infor, team => stream.
         req.setAttribute("listMemberTeam", listMemberTeam);
 
 
