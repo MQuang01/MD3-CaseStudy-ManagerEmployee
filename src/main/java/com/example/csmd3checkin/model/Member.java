@@ -73,6 +73,11 @@ public class Member {
         this.teamId = team.getId();
     }
 
+    public Member(int memberId, String name) {
+        this.id = memberId;
+        this.fullName = name;
+    }
+
     public int getId() {
         return id;
     }
