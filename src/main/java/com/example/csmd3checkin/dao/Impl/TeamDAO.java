@@ -13,10 +13,10 @@ import java.util.List;
 
 public class TeamDAO extends DBConnect implements ITeamDAO {
     private static final String SELECT_ALL_TEAM="select * from teams";
-    private static final String SELECT_ALL_TEAM_GROUP_BY_ID = "select teams.id, teams.`name` from members\n" +
-            "inner join teams on teams.id = members.teamId\n" +
-            "inner join accounts on accounts.id = members.accounts_id\n" +
-            "where accounts.`role` = 'employee'\n" +
+    private static final String SELECT_ALL_TEAM_GROUP_BY_ID = "select teams.id, teams.`name` from members " +
+            "inner join teams on teams.id = members.teamId " +
+            "inner join accounts on accounts.id = members.accounts_id " +
+            "where accounts.`role` = 'employee' " +
             "group by teams.id, teams.`name`";
     @Override
     public List<Team> selectAllTeam() {

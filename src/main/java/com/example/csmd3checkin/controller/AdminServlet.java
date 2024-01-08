@@ -3,6 +3,7 @@ package com.example.csmd3checkin.controller;
 import com.example.csmd3checkin.dao.Impl.*;
 import com.example.csmd3checkin.model.*;
 import com.example.csmd3checkin.model.enumration.ERole;
+import com.example.csmd3checkin.util.AppUtil;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -132,11 +133,14 @@ public class AdminServlet extends HttpServlet {
 
     private void showCheckAll(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        List<Member> listMember = memberDAO.selectAllMember();
-        req.setAttribute("listMember", listMember);
+        int page = Integer.parseInt(AppUtil.getParameterWithDefaultValue(req, "page", "1").toString());
+        int litmit = Integer.parseInt(AppUtil.getParameterWithDefaultValue(req, "limit", "5").toString());
 
-        List<TimeKeeping> listTimeKeeping = timeKeepingDAO.selectAllTimeKeeping();
-        req.setAttribute("listCheckin", listTimeKeeping);
+        List<TimeKeeping> timeKeepingPages = timeKeepingDAO.selectAllTimeKeepingPage(page, litmit);
+        int totalPage = timeKeepingDAO.selectTotalPage(litmit);
+        req.setAttribute("totalPage", totalPage);
+        req.setAttribute("page", page);
+        req.setAttribute("timeKeepingPages", timeKeepingPages);
 
         req.getRequestDispatcher("jsp/menuAdmin/show-check-all.jsp").forward(req, resp);
 
@@ -174,7 +178,8 @@ public class AdminServlet extends HttpServlet {
         req.setAttribute("member", member);
 
         List<TimeKeeping> listTimeKeeping = timeKeepingDAO.selectAllTimeKeeping();
-        int[] arr=checkLateOnTimeAbsent(listTimeKeeping);
+
+        int[] arr = checkLateOnTimeAbsent(listTimeKeeping);
         req.setAttribute("listTimeKeeping1", arr[0]);
         req.setAttribute("listTimeKeeping2", arr[1]);
         req.setAttribute("listTimeKeeping3", arr[2]);
@@ -183,10 +188,6 @@ public class AdminServlet extends HttpServlet {
         //show member
         List<Member> listMemberTeam = memberDAO.selectMemberTeam();
         req.setAttribute("listMemberTeam", listMemberTeam);
-
-
-//        List<Team> listTeam = teamDAO.selectTeamProject();
-//        req.setAttribute("listTeam", listTeam);
 
 
 
@@ -236,7 +237,7 @@ public class AdminServlet extends HttpServlet {
         String name = req.getParameter("projectName");
         LocalDate deadline = LocalDate.parse(req.getParameter("deadline"));
 
-        if (deadline.isBefore(LocalDate.now())){
+        if (deadline.isBefore(LocalDate.now())) {
             HttpSession messageError = req.getSession();
             messageError.setAttribute("errorMess", "The deadline cannot be in the past.");
             resp.sendRedirect("/admin-page?act=manager-menu");
