@@ -13,7 +13,6 @@ import java.util.List;
 public class AccountDAO extends DBConnect implements IAccountDAO {
     private static final String SELECT_ACCOUNT = "SELECT * FROM accounts WHERE username = ? AND password = ?";
     private static final String INSERT_ACCOUNT = "INSERT INTO accounts (username,password,role) VALUES (?,?,?);";
-
     private static final String TAKE_NEW_ACCOUNT_ID="SELECT id FROM accounts ORDER BY id DESC LIMIT 1";
 
     private static final String SELECT_ALL_ACCOUNT = "SELECT * FROM accounts";
@@ -35,8 +34,6 @@ public class AccountDAO extends DBConnect implements IAccountDAO {
 
                 return new Account(id, username, psw, role);
             }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

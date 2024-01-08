@@ -7,7 +7,7 @@ import java.sql.SQLException;
 public class DBConnect {
     private final String jdbcURL = "jdbc:mysql://localhost:3306/manager_employees";
     private final String userID = "root";
-    private final String password = "1212";
+    private final String password = "Raisingthebar123!!/";
 
     public Connection getConnection() throws Exception {
         Connection connection = null;
