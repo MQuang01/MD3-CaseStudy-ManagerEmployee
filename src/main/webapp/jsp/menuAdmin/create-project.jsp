@@ -102,7 +102,7 @@
                                     ${employee.email}
                             </td>
                             <td class="px-4 py-3 text-xs">
-                                    ${employee.teamId}
+                                    ${employee.team.name}
                             </td>
                         </tr>
 

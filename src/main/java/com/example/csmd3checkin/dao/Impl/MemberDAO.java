@@ -207,6 +207,7 @@ public class MemberDAO extends DBConnect implements IMemberDAO {
         try (PreparedStatement preparedStatement = getConnection().prepareStatement(SELECT_TEAMMATE)){
             preparedStatement.setInt(1, member.getTeamId());
             ResultSet rs = preparedStatement.executeQuery();
+
             while (rs.next()){
                 int id = rs.getInt( "id");
                 String name = rs.getString("name");
