@@ -85,7 +85,7 @@
                         class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800"
                 >
 
-                <c:forEach var="listMemberTeam" items="${listMemberTeam}">
+                <c:forEach var="listMember" items="${listMemberTeam}">
 
                 <tr class="text-gray-700 dark:text-gray-400">
                     <td class="px-4 py-3">
@@ -106,9 +106,9 @@
                                 ></div>
                             </div>
                             <div>
-                                <p class="font-semibold"><c:out value="${listMemberTeam.fullName}"/></p>
+                                <p class="font-semibold"><c:out value="${listMember.fullName}"/></p>
                                 <p class="text-xs text-gray-600 dark:text-gray-400">
-                                    <c:out value="${listMemberTeam.account.role}"/>
+                                    <c:out value="${listMember.account.role}"/>
 <%--                                    <c:forEach var="listAccount" items="${listAccount}">--%>
 <%--                                        <c:if test="${listMember.id == listAccount.id}">--%>
 <%--                                            ${listAccount.role}--%>
@@ -119,17 +119,17 @@
                         </div>
                     </td>
                     <td class="px-4 py-3 text-sm">
-                        <c:out value="${listMemberTeam.phoneNum}"/>
+                        <c:out value="${listMember.phoneNum}"/>
                     </td>
                     <td class="px-4 py-3 text-xs">
-                        <c:out value="${listMemberTeam.doB}"/>
+                        <c:out value="${listMember.doB}"/>
                     </td>
                     <td class="px-4 py-3 text-sm">
-                        <c:out value="${listMemberTeam.email}"/>
+                        <c:out value="${listMember.email}"/>
                     </td>
 
                     <td class="px-4 py-3 text-sm">
-<%--                        <c:out value="${listMemberTeam.team.name}"/>--%>
+                        <c:out value="${listMember.team.name}"/>
                     </td>
 
 
