@@ -11,7 +11,6 @@ import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class MemberDAO extends DBConnect implements IMemberDAO {
     private static final String SELECT_MEMBER = "select * from members " +
@@ -21,13 +20,15 @@ public class MemberDAO extends DBConnect implements IMemberDAO {
     private static final String SELECT_MEMBERS_TEAMS="select accounts.`role`, members.`name`,members.phone,members.dob,members.email,teams.id,teams.`name` as teamname from members\n" +
             "join teams join accounts\n" +
             "on members.teamId=teams.id and members.id=accounts.id";
+    private static final String SELECT_TEAMMATE = "select * from members where (teamId = ?);";
+
     private static final String SELECT_ALL_MEMBERS = "select * from members";
     private static final String INSERT_MEMBERS_SQL = "INSERT INTO members (name,phone,dob,email,teamId,accounts_Id) VALUES (?,?,?,?,?,?);";
 
     private static final String DELETE_MEMBERS="delete from members where id = ?;";
     private static final String UPDATE_MEMBER_SQL = "update members set name = ?,phone=?,dob=?,email= ?, country =?,teamId=?,accounts_Id=? where id = ?;";
     private static final String SELECT_ALL_MEMBER_TYPE = "select * from members inner join accounts on members.accounts_Id = accounts.id where ( role = ? )";
-    private static final String SELECT_TEAM_BY_ID = "select * from teams where (id = ?)";
+    public static final String SELECT_TEAM_BY_ID = "select * from teams where (id = ?)";
 
 
     public MemberDAO() {
@@ -138,7 +139,7 @@ public class MemberDAO extends DBConnect implements IMemberDAO {
         }
     }
     @Override
-    public boolean deleteMember(int id) {
+    public void deleteMember(int id) {
         boolean rowDeleted;
         try (Connection connection = getConnection(); PreparedStatement statement = connection.prepareStatement(DELETE_MEMBERS);) {
             statement.setInt(1, id);
@@ -148,7 +149,6 @@ public class MemberDAO extends DBConnect implements IMemberDAO {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        return rowDeleted;
     }
     @Override
     public boolean updateMember(Member member) {
@@ -193,6 +193,28 @@ public class MemberDAO extends DBConnect implements IMemberDAO {
 
                 memberList.add(new Member(id , name, phone, doB, mail, team));
             }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return memberList;
+    }
+
+    @Override
+    public List<Member> selectTeamMates(Member member) {
+        List<Member> memberList = new ArrayList<>();
+        try (PreparedStatement preparedStatement = getConnection().prepareStatement(SELECT_TEAMMATE)){
+            preparedStatement.setInt(1, member.getTeamId());
+            ResultSet rs = preparedStatement.executeQuery();
+            while (rs.next()){
+                int id = rs.getInt( "id");
+                String name = rs.getString("name");
+                String email = rs.getString("email");
+                int teamId = rs.getInt("teamId");
+                Team team = selectTeamById(teamId);
+
+                memberList.add(new Member(id, name, email, team));            }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } catch (Exception e) {

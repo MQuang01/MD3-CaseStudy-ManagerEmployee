@@ -109,6 +109,11 @@
                                 <p class="font-semibold"><c:out value="${listMemberTeam.fullName}"/></p>
                                 <p class="text-xs text-gray-600 dark:text-gray-400">
                                     <c:out value="${listMemberTeam.account.role}"/>
+<%--                                    <c:forEach var="listAccount" items="${listAccount}">--%>
+<%--                                        <c:if test="${listMember.id == listAccount.id}">--%>
+<%--                                            ${listAccount.role}--%>
+<%--                                        </c:if>--%>
+<%--                                    </c:forEach>--%>
                                 </p>
                             </div>
                         </div>

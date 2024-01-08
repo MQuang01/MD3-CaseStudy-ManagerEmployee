@@ -54,11 +54,20 @@ public class Member {
         this.account = account;
         this.accountId = account.getId();
     }
+
     public Member(int id, String fullName, String phoneNum, LocalDate doB, String email, Team team) {
         this.id = id;
         this.fullName = fullName;
         this.phoneNum = phoneNum;
         this.doB = doB;
+        this.email = email;
+        this.team = team;
+        this.teamId = team.getId();
+    }
+
+    public Member(int id, String name, String email, Team team) {
+        this.id = id;
+        this.fullName = name;
         this.email = email;
         this.team = team;
         this.teamId = team.getId();
