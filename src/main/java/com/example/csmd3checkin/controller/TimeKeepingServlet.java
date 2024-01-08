@@ -15,15 +15,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.time.LocalTime;
-import java.util.Arrays;
-import java.util.List;
 
-import static com.example.csmd3checkin.dao.Util.checkLateOnTimeAbsent;
 
-@WebServlet(name="timeKeepingServlets", value = "/timekeeping")
+@WebServlet(name = "timeKeepingServlets", value = "/timekeeping")
 public class TimeKeepingServlet extends HttpServlet {
     private TimeKeepingDAO timeKeepingDAO;
+
     public void init() {
         timeKeepingDAO = new TimeKeepingDAO();
     }
@@ -31,12 +28,12 @@ public class TimeKeepingServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String action = req.getParameter("act");
-        if (action == null){
+        if (action == null) {
             action = "";
         }
-        switch (action){
+        switch (action) {
             case "req-checkin":
-                checkInDB(req,resp);
+                checkInDB(req, resp);
                 break;
             case "req-checkout":
                 checkOutDB(req, resp);
@@ -51,32 +48,34 @@ public class TimeKeepingServlet extends HttpServlet {
         HttpSession session = req.getSession();
         Member member = (Member) session.getAttribute("member");
 
-        if(timeKeepingDAO.updateTimeCheckin(member)){
-            if (member.getAccount().getRole().equals(ERole.ADMIN)){
+        if (timeKeepingDAO.updateTimeCheckin(member)) {
+            if (member.getAccount().getRole().equals(ERole.ADMIN)) {
                 resp.sendRedirect("/admin-page");
-            }else {
+            } else {
                 resp.sendRedirect("/employee-page");
             }
-        }else {
+        } else {
             req.setAttribute("message", "Check-in failed in database");
             resp.sendRedirect("/timekeeping");
         }
     }
+
     private void checkOutDB(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         HttpSession session = req.getSession();
         Member member = (Member) session.getAttribute("member");
 
-        if(timeKeepingDAO.updateTimeCheckout(member)){
-            if (member.getAccount().getRole().equals(ERole.ADMIN)){
+        if (timeKeepingDAO.updateTimeCheckout(member)) {
+            if (member.getAccount().getRole().equals(ERole.ADMIN)) {
                 resp.sendRedirect("/admin-page");
-            }else {
+            } else {
                 resp.sendRedirect("/employee-page");
             }
-        }else {
+        } else {
             req.setAttribute("message", "Check-out failed in database");
             resp.sendRedirect("/timekeeping");
         }
     }
+
     private void showCheckinForm(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
         HttpSession session = req.getSession();
         Member member = (Member) session.getAttribute("member");
@@ -89,12 +88,10 @@ public class TimeKeepingServlet extends HttpServlet {
     }
 
 
-
     private void showTimeKeeping(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.getRequestDispatcher("jsp/pagesIndex/indexAdmin.jsp").forward(request, response);
 
     }
-
 
 
     @Override

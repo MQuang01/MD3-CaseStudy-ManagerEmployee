@@ -91,7 +91,7 @@
                                 ${member.email}
                         </td>
                         <td class="px-4 py-3 text-xs">
-<%--                            ${member.team.getNam()}   --%>
+<%--                            ${member.team.getName()}   --%>
                         </td>
                     </tr>
                 </c:forEach>
