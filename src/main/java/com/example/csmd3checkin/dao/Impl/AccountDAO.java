@@ -15,7 +15,7 @@ public class AccountDAO extends DBConnect implements IAccountDAO {
     private static final String INSERT_ACCOUNT = "INSERT INTO accounts (username,password,role) VALUES (?,?,?);";
 
     private static final String TAKE_NEW_ACCOUNT_ID="SELECT id FROM accounts ORDER BY id DESC LIMIT 1";
-    private static final String FIND_ID_ACCOUNT="";
+
     private static final String SELECT_ALL_ACCOUNT = "SELECT * FROM accounts";
 
     @Override

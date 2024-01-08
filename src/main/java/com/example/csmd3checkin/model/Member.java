@@ -102,6 +102,10 @@ public class Member {
     public void setProject(Project project) {
         this.project = project;
     }
+    public Member(int memberId, String name) {
+        this.id = memberId;
+        this.fullName = name;
+    }
 
     public int getId() {
         return id;
