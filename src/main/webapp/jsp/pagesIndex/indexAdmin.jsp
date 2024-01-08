@@ -6,6 +6,12 @@
   Time: 8:24 PM
   To change this template use File | Settings | File Templates.
 --%>
+<script>
+    const listTimeKeeping1 = ${listTimeKeeping1}
+    const listTimeKeeping2 = ${listTimeKeeping2}
+    const listTimeKeeping3 = ${listTimeKeeping3}
+
+</script>
 <c:import url="../../headerAdmin.jsp"/>
 <main class="h-full overflow-y-auto">
     <div class="grid gap-6 mb-8 md:grid-cols-2">
@@ -13,20 +19,31 @@
             <h4 class="mb-4 font-semibold text-gray-800 dark:text-gray-300">
                 Percent Checkin
             </h4>
+
+<%--            <c:forEach var="listTimeKeeping" items="${listTimeKeeping}" varStatus="loop">--%>
+<%--                <!-- Tạo phần tử HTML với id riêng biệt -->--%>
+<%--                <div class="px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800">--%>
+<%--                    <p id="timeKeeping_${loop.index + 1}" class="text-sm text-gray-600 dark:text-gray-400">--%>
+<%--                        gia thi thu ${loop.index + 1}: ${listTimeKeeping}--%>
+<%--                    </p>--%>
+<%--                </div>--%>
+
+<%--            </c:forEach>--%>
+
             <canvas id="pie" width="705" height="352" style="display: block; height: 282px; width: 564px;" class="chartjs-render-monitor"></canvas>
             <div class="flex justify-center mt-4 space-x-3 text-sm text-gray-600 dark:text-gray-400">
                 <!-- Chart legend -->
                 <div class="flex items-center">
                     <span class="inline-block w-3 h-3 mr-1 bg-blue-500 rounded-full"></span>
-                    <span>Uncheck</span>
+                    <span>On Time </span>
                 </div>
                 <div class="flex items-center">
                     <span class="inline-block w-3 h-3 mr-1 bg-teal-600 rounded-full"></span>
-                    <span>On Time</span>
+                    <span>Late</span>
                 </div>
                 <div class="flex items-center">
                     <span class="inline-block w-3 h-3 mr-1 bg-purple-600 rounded-full"></span>
-                    <span>Late</span>
+                    <span>Uncheck</span>
                 </div>
             </div>
         </div>
@@ -68,7 +85,7 @@
                         class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800"
                 >
 
-                <c:forEach var="listMember" items="${listMember}">
+                <c:forEach var="listMemberTeam" items="${listMemberTeam}">
 
                 <tr class="text-gray-700 dark:text-gray-400">
                     <td class="px-4 py-3">
@@ -89,8 +106,9 @@
                                 ></div>
                             </div>
                             <div>
-                                <p class="font-semibold"><c:out value="${listMember.fullName}"/></p>
+                                <p class="font-semibold"><c:out value="${listMemberTeam.fullName}"/></p>
                                 <p class="text-xs text-gray-600 dark:text-gray-400">
+                                    <c:out value="${listMemberTeam.account.role}"/>
 <%--                                    <c:forEach var="listAccount" items="${listAccount}">--%>
 <%--                                        <c:if test="${listMember.id == listAccount.id}">--%>
 <%--                                            ${listAccount.role}--%>
@@ -101,24 +119,20 @@
                         </div>
                     </td>
                     <td class="px-4 py-3 text-sm">
-                        <c:out value="${listMember.phoneNum}"/>
+                        <c:out value="${listMemberTeam.phoneNum}"/>
                     </td>
                     <td class="px-4 py-3 text-xs">
-                        <c:out value="${listMember.doB}"/>
+                        <c:out value="${listMemberTeam.doB}"/>
                     </td>
                     <td class="px-4 py-3 text-sm">
-                        <c:out value="${listMember.email}"/>
+                        <c:out value="${listMemberTeam.email}"/>
                     </td>
 
                     <td class="px-4 py-3 text-sm">
-                    <c:forEach var="listTeam" items="${listTeam}">
-                        <c:if test="${listMember.teamId == listTeam.id}">
-                            ${listTeam.name}
-                        </c:if>
-                    </c:forEach>
+<%--                        <c:out value="${listMemberTeam.team.name}"/>--%>
                     </td>
 
-<%--                    ở đây--%>
+
                     <td class="px-4 py-3 text-sm">
 
                     </td>
@@ -132,4 +146,9 @@
     </div>
 
 </main>
+<script>
+
+</script>
+
+
 <c:import url="../../footerAdmin.jsp"/>

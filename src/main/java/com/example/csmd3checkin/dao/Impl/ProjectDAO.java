@@ -15,11 +15,12 @@ import static com.example.csmd3checkin.dao.Impl.MemberDAO.SELECT_TEAM_BY_ID;
 
 
 public class ProjectDAO extends DBConnect implements IProjectDAO {
+    private static final String SELECT_PROJECT_idname="select id,name,teamId from projects";
     private static final String SELECT_MY_PROJECT = "select p.id, p.`name`, p.deadline, p.`status`, p.teamId from projects p " +
             "inner join teams on teams.id = p.teamId " +
             "inner join members on members.teamId = teams.id " +
             "where (members.id = ?)";
-    private static final String SELECT_PROJECT_idname="select id,name from projects";
+//    private static final String SELECT_PROJECT_idname="select id,name from projects";
     private static final String SELECT_ALL_PROJECT = "select * from projects";
     private static final String INSERT_PROJECT = "INSERT INTO `manager_employees`.`projects` (`name`, `deadline`, `teamId`) VALUES (? , ? , ?);";
 
@@ -37,7 +38,8 @@ public class ProjectDAO extends DBConnect implements IProjectDAO {
 
                 project.add(new Project(
                         rs.getInt("id"),
-                        rs.getString("name")
+                        rs.getString("name"),
+                        rs.getInt("teamId")
                 ));
 
             }

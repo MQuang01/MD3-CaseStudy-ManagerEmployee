@@ -21,6 +21,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
+import static com.example.csmd3checkin.dao.Util.checkLateOnTimeAbsent;
+
 @WebServlet(name = "adminServlets", value = "/admin-page")
 public class AdminServlet extends HttpServlet {
     private MemberDAO memberDAO;
@@ -171,17 +173,22 @@ public class AdminServlet extends HttpServlet {
 
         req.setAttribute("member", member);
 
+        List<TimeKeeping> listTimeKeeping = timeKeepingDAO.selectAllTimeKeeping();
+        int[] arr=checkLateOnTimeAbsent(listTimeKeeping);
+        req.setAttribute("listTimeKeeping1", arr[0]);
+        req.setAttribute("listTimeKeeping2", arr[1]);
+        req.setAttribute("listTimeKeeping3", arr[2]);
+
+
         //show member
-        List<Member> listMember = memberDAO.selectAllMember();
-        req.setAttribute("listMember", listMember);
+        List<Member> listMemberTeam = memberDAO.selectMemberTeam();
+        req.setAttribute("listMemberTeam", listMemberTeam);
 
-        List<Account> listAccount = accountDAO.selectAllAccount();
-        req.setAttribute("listAccount", listAccount);
-        List<Team> listTeam = teamDAO.selectAllTeam();
 
-//
-        req.setAttribute("listTeam", listTeam);
-//
+//        List<Team> listTeam = teamDAO.selectTeamProject();
+//        req.setAttribute("listTeam", listTeam);
+
+
 
         req.getRequestDispatcher("jsp/pagesIndex/indexAdmin.jsp").forward(req, resp);
 

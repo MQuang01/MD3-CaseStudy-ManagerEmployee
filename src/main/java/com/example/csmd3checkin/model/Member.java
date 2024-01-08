@@ -16,6 +16,15 @@ public class Member {
     public Member() {
     }
 
+    public Member(String fullName, String phoneNum, LocalDate doB, String email, Team team, Account account) {
+        this.fullName = fullName;
+        this.phoneNum = phoneNum;
+        this.doB = doB;
+        this.email = email;
+        this.team = team;
+        this.account = account;
+    }
+
     public Member(int id, String fullName, String phoneNum, LocalDate doB, String email, int teamId, int accountId) {
         this.id = id;
         this.fullName = fullName;

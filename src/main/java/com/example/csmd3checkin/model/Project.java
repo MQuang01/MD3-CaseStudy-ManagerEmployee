@@ -25,6 +25,12 @@ public class Project {
         this.status = status;
     }
 
+    public Project(int id, String name, int teamId) {
+        this.id = id;
+        this.name = name;
+        this.teamId = teamId;
+    }
+
     public Project(String name, LocalDate deadline, int teamId) {
         this.name = name;
         this.deadLine = deadline;
