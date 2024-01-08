@@ -12,8 +12,20 @@ public class Member {
     private Team team;
     private int accountId;
     private Account account;
-
+    private Project project;
     public Member() {
+    }
+
+    public Member(int id, String fullName, String phoneNum, LocalDate doB, String email, int teamId, Team team, Account account, Project project) {
+        this.id = id;
+        this.fullName = fullName;
+        this.phoneNum = phoneNum;
+        this.doB = doB;
+        this.email = email;
+        this.teamId = teamId;
+        this.team = team;
+        this.account = account;
+        this.project = project;
     }
 
     public Member(String fullName, String phoneNum, LocalDate doB, String email, Team team, Account account) {
@@ -73,6 +85,23 @@ public class Member {
         this.teamId = team.getId();
     }
 
+    public Member(String fullName, String phoneNum, LocalDate doB, String email, Team team, Account account, Project project) {
+        this.fullName = fullName;
+        this.phoneNum = phoneNum;
+        this.doB = doB;
+        this.email = email;
+        this.team = team;
+        this.account = account;
+        this.project = project;
+    }
+
+    public Project getProject() {
+        return project;
+    }
+
+    public void setProject(Project project) {
+        this.project = project;
+    }
     public Member(int memberId, String name) {
         this.id = memberId;
         this.fullName = name;

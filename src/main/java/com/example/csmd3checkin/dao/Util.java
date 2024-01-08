@@ -12,9 +12,9 @@ public class Util {
             if (!list.isStatus()){
                 arr[2]++;
             } else if(list.getTimeCheckin().isBefore(LocalTime.of(8, 0, 0))){
-                arr[0]++;
-            } else {
                 arr[1]++;
+            } else {
+                arr[0]++;
             }
         }
 

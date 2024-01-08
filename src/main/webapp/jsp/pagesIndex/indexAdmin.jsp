@@ -20,15 +20,6 @@
                 Percent Checkin
             </h4>
 
-<%--            <c:forEach var="listTimeKeeping" items="${listTimeKeeping}" varStatus="loop">--%>
-<%--                <!-- Tạo phần tử HTML với id riêng biệt -->--%>
-<%--                <div class="px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800">--%>
-<%--                    <p id="timeKeeping_${loop.index + 1}" class="text-sm text-gray-600 dark:text-gray-400">--%>
-<%--                        gia thi thu ${loop.index + 1}: ${listTimeKeeping}--%>
-<%--                    </p>--%>
-<%--                </div>--%>
-
-<%--            </c:forEach>--%>
 
             <canvas id="pie" width="705" height="352" style="display: block; height: 282px; width: 564px;" class="chartjs-render-monitor"></canvas>
             <div class="flex justify-center mt-4 space-x-3 text-sm text-gray-600 dark:text-gray-400">
@@ -109,11 +100,7 @@
                                 <p class="font-semibold"><c:out value="${listMember.fullName}"/></p>
                                 <p class="text-xs text-gray-600 dark:text-gray-400">
                                     <c:out value="${listMember.account.role}"/>
-<%--                                    <c:forEach var="listAccount" items="${listAccount}">--%>
-<%--                                        <c:if test="${listMember.id == listAccount.id}">--%>
-<%--                                            ${listAccount.role}--%>
-<%--                                        </c:if>--%>
-<%--                                    </c:forEach>--%>
+
                                 </p>
                             </div>
                         </div>
@@ -134,7 +121,7 @@
 
 
                     <td class="px-4 py-3 text-sm">
-
+                        <c:out value="${listMember.project.name}"/>
                     </td>
 
                 </tr>

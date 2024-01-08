@@ -18,11 +18,20 @@ public class Project {
         this.name = name;
     }
 
+    public Project(String name) {
+        this.name = name;
+    }
+
     public Project(int id, String name, LocalDate deadLine, boolean status) {
         this.id = id;
         this.name = name;
         this.deadLine = deadLine;
         this.status = status;
+    }
+
+    public Project(String name, int teamId) {
+        this.name = name;
+        this.teamId = teamId;
     }
 
     public Project(int id, String name, int teamId) {

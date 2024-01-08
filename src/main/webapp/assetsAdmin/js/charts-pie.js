@@ -16,7 +16,7 @@ const pieConfig = {
         label: 'Dataset 1',
       },
     ],
-    labels: ['Late', 'On time', 'Check'],
+    labels: ['Late', 'On time', 'UnCheck'],
   },
   options: {
     responsive: true,

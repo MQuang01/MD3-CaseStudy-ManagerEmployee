@@ -65,12 +65,8 @@
 <h4 class="mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300"> Team name</h4>
 <div class="px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800">
     <p class="text-sm text-gray-600 dark:text-gray-400">
-        <c:forEach var="listTeam" items="${listTeam}">
 
-            <c:if test="${member.teamId == listTeam.id}">
-                ${listTeam.name}
-            </c:if>
-        </c:forEach>
+        <c:out value="${member.team.name}"/>
 
     </p>
 </div>
@@ -78,11 +74,8 @@
 <h4 class="mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300"> Project name</h4>
 <div class="px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800">
     <p class="text-sm text-gray-600 dark:text-gray-400">
-        <c:forEach var="projectIdName" items="${projectIdName}">
-            <c:if test="${member.teamId == projectIdName.teamId}">
-                ${projectIdName.name}
-            </c:if>
-        </c:forEach>
+
+    <c:out value="${member.project.name}"/>
 
     </p>
 </div>
