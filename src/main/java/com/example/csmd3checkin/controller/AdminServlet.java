@@ -185,11 +185,10 @@ public class AdminServlet extends HttpServlet {
         req.setAttribute("listMemberTeam", listMemberTeam);
 
 
-//        req.setAttribute("listAccount", listAccount);  // 2 cái này để làm gì?
 //        List<Team> listTeam = teamDAO.selectTeamProject();
+//        req.setAttribute("listTeam", listTeam);
 
-//        List<Project> projectIdName = projectDAO.selectProjectIdName();
-//        req.setAttribute("projectIdName", projectIdName);
+
 
         req.getRequestDispatcher("jsp/pagesIndex/indexAdmin.jsp").forward(req, resp);
 
@@ -250,7 +249,6 @@ public class AdminServlet extends HttpServlet {
         projectDAO.insertProject(new Project(name, deadline, teamId));
         resp.sendRedirect("/admin-page");
     }
-
 
     private void insertMember(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, IOException, ServletException {

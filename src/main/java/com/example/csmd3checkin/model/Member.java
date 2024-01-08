@@ -121,6 +121,14 @@ public class Member {
         this.teamId = teamId;
     }
 
+    public Team getTeam() {
+        return team;
+    }
+
+    public void setTeam(Team team) {
+        this.team = team;
+    }
+
     public int getAccountId() {
         return accountId;
     }
